@@ -1,0 +1,5 @@
+.idea
+.DS_Store
+.next
+node_modules
+_tmp

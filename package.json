@@ -1,0 +1,40 @@
+{
+  "name": "rmgl",
+  "version": "1.0.0",
+  "description": "Redmine and Gitlab project manager",
+  "main": "pages/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Rootre/rmgl.git"
+  },
+  "keywords": [
+    "Redmine",
+    "Gitlab",
+    "Footshop"
+  ],
+  "author": "Ondřej Tůma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rootre/rmgl/issues"
+  },
+  "homepage": "https://github.com/Rootre/rmgl#readme",
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "isomorphic-unfetch": "^2.0.0",
+    "mobx": "^5.0.3",
+    "mobx-react": "^5.2.3",
+    "next": "^6.1.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "@zeit/next-sass": "^0.2.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "node-sass": "^4.9.0",
+    "react-svg-loader": "^2.1.0"
+  }
+}
