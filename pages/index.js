@@ -1,51 +1,69 @@
 import {Component} from 'react';
 import Head from 'next/head';
-import Router from 'next/router';
-import {Provider} from 'mobx-react';
+import {Provider, inject} from 'mobx-react';
 
-import Login from 'Components/Login';
+import Board from 'Components/Board';
 
-import {getStore as getAuthStore} from 'Data/state/auth';
+import {getStore as getBoardStore} from 'Data/state/board';
 import {getStore as getErrorsStore} from 'Data/state/errors';
-import {getUser} from 'Data/api';
+import {getStore as getGeneralStore} from 'Data/state/general';
+import {getStore as getTeamStore} from 'Data/state/team';
+import {getStore as getVisualStore} from 'Data/state/visual';
 
-const authStore = getAuthStore();
+import {fetchIssues, fetchStatuses} from 'Data/api/redmine';
+
+const boardStore = getBoardStore();
 const errorsStore = getErrorsStore();
+const generalStore = getGeneralStore();
+const teamStore = getTeamStore();
+const visualStore = getVisualStore();
 
 const stores = {
-    authStore,
+    boardStore,
     errorsStore,
+    generalStore,
+    teamStore,
+    visualStore,
 };
 
-export default class Index extends Component {
-    static async getInitialProps({ req, res }) {
-        const user = await getUser(req);
+@inject('boardStore')
+class Index extends Component {
+    componentWillMount() {
+        const {boardStore, issues, statuses} = this.props;
 
-        if (user) {
-            if (res) {
-                res.writeHead(302, {
-                    Location: '/events'
-                });
-                res.end();
-                res.finished = true;
-            }
-            else {
-                Router.push('/events');
-            }
-        }
+        boardStore.setStatuses(statuses.issue_statuses);
+        boardStore.setIssues(issues.issues);
+    }
 
-        return {};
+    render() {
+        return (
+            <div>
+                <Head>
+                    <title>RMGL | Homepage</title>
+                </Head>
+
+                <Board/>
+            </div>
+        )
+    }
+
+}
+
+export default class extends Component {
+    static async getInitialProps() {
+        const statuses = await fetchStatuses();
+        const issues = await fetchIssues(teamStore.active_member_redmine_id);
+
+        return {
+            issues,
+            statuses,
+        };
     }
 
     render() {
         return (
             <Provider {...stores}>
-                <div>
-                    <Head>
-                        <title>Eventio | Homepage</title>
-                    </Head>
-                    <Login/>
-                </div>
+                <Index {...this.props}/>
             </Provider>
         )
     }

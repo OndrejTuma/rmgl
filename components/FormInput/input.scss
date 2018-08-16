@@ -1,0 +1,55 @@
+$height: 40px;
+
+.error {
+    color: #f00;
+    font-size: .7em;
+    left: 0;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 100%;
+}
+.container {
+    border-bottom: 1px solid #ccc;
+    margin: $height 0;
+    position: relative;
+    text-align: left;
+    transition: border .2s linear;
+
+    &.hasError {
+        border-bottom-color: #f00;
+    }
+    &.focused {
+        border-bottom-color: #999;
+    }
+
+    input {
+        border: none;
+        font-size: 14px;
+        height: $height;
+        padding: 0;
+        outline: none;
+        width: 100%;
+    }
+}
+.label {
+    bottom: 0;
+    display: block;
+    left: 0;
+    line-height: 0;
+    padding: $height / 2 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all .2s linear;
+
+    .filled &,
+    .focused & {
+        bottom: 100%;
+        font-size: .7em;
+        line-height: 1;
+        padding: 0;
+        top: auto;
+    }
+}

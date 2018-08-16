@@ -4,7 +4,9 @@
   "description": "Redmine and Gitlab project manager",
   "main": "pages/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next",
+    "build": "next build && next export",
+    "start": "next start"
   },
   "repository": {
     "type": "git",
@@ -23,12 +25,14 @@
   "homepage": "https://github.com/Rootre/rmgl#readme",
   "dependencies": {
     "classnames": "^2.2.6",
+    "copy-to-clipboard": "^3.0.8",
     "isomorphic-unfetch": "^2.0.0",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "next": "^6.1.1",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "speakingurl": "^14.0.1"
   },
   "devDependencies": {
     "@zeit/next-sass": "^0.2.0",
