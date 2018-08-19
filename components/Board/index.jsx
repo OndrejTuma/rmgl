@@ -10,15 +10,27 @@ import styles from './board.scss';
 @inject('boardStore', 'generalStore')
 @observer
 class Board extends Component {
+    get is_fetching() {
+        return this.props.generalStore.fetching.has('issues')
+    }
+
     render() {
-        const {boardStore, generalStore} = this.props;
+        const {boardStore} = this.props;
+
+        //TODO: for some reason, without tapping into items, reaction doesnt trigger on issue update
+        const size = this.props.boardStore.issues.size;
 
         return (
             <div className={styles.board}>
-                {generalStore.fetching.has('issues') && <SpinnerSVG width={30} height={30} className={'spinner'}/>}
+                {this.is_fetching && (
+                    <div className={styles.fetching}>
+                        <SpinnerSVG width={50} height={50} className={'spinner'}/>
+                    </div>
+                )}
+
                 <div className={styles.wrapper}>
                     {boardStore.statuses.map(status => (
-                        <Status key={status.id} issues={boardStore.issues} {...status}/>
+                        <Status key={status.id} issues={boardStore.getIssuesByStatus(status.id)} {...status}/>
                     ))}
                 </div>
             </div>

@@ -6,11 +6,11 @@ import Form from '../Form';
 import FormSelect from '../FormSelect';
 import Textarea from '../Textarea';
 
-import {fetchIssues, updateIssue} from 'Data/api/redmine';
+import {updateIssue} from 'Data/api/redmine';
 
 import styles from './edit-issue.scss';
 
-@inject('boardStore', 'generalStore', 'teamStore')
+@inject('boardStore', 'generalStore', 'teamStore', 'visualStore')
 @observer
 class EditIssue extends Component {
 
@@ -33,37 +33,42 @@ class EditIssue extends Component {
     }
 
     handleSubmit = async elements => {
-        const {boardStore, generalStore, id, teamStore: {active_member_redmine_id}} = this.props;
+        const {boardStore, generalStore, issue} = this.props;
 
-        generalStore.setFetching(id);
+        generalStore.setFetching(issue.id);
 
-        updateIssue(id, {
-            issue: {
-                assigned_to_id: elements.get('assigned_to_id'),
-                status_id: elements.get('status_id'),
-                notes: elements.get('notes'),
-            }
-        }).then(response => {
-            generalStore.deleteFetching(id);
+        const changed_issue_props = {
+            assigned_to_id: parseInt(elements.get('assigned_to_id')),
+            status_id: parseInt(elements.get('status_id')),
+            notes: elements.get('notes'),
+        };
 
-            if (response.ok) {
-                generalStore.setFetching('issues');
+        updateIssue(issue.id, {issue: changed_issue_props}).then(response => {
+            generalStore.deleteFetching(issue.id);
 
-                fetchIssues(active_member_redmine_id).then(response => {
-                    generalStore.deleteFetching('issues');
-
-                    boardStore.clearIssues();
-                    boardStore.setIssues(response.issues);
-                })
-            }
-            else {
+            if (!response.ok) {
                 alert('Something went wrong:(');
+                return;
             }
+
+            //issue update
+            boardStore.updateIssue({
+                ...issue,
+                assigned_to: {
+                    id: changed_issue_props.assigned_to_id,
+                },
+                status: {
+                    id: changed_issue_props.status_id
+                },
+                last_update: new Date(),
+            });
+
+            this.props.visualStore.deletePopup(issue.id);
         });
     };
 
     render() {
-        const {assigned_to, generalStore, id, subject, status} = this.props;
+        const {issue: {assigned_to, id, subject, status}, generalStore} = this.props;
 
         return (
             <div>
@@ -76,8 +81,8 @@ class EditIssue extends Component {
                         selected={status.id}
                     />
                     <FormSelect
-                        label={'Assign to:'}
-                        name={'assign_to_id'}
+                        label={'Assigned to:'}
+                        name={'assigned_to_id'}
                         options={this.usersOptions}
                         selected={assigned_to.id}
                     />

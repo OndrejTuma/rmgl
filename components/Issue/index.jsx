@@ -2,19 +2,27 @@ import {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 import getSlug from 'speakingurl';
 import copy from 'copy-to-clipboard';
+import { DragSource } from 'react-dnd';
 
 import EditIssue from '../EditIssue';
 import Popup from '../Popup';
 
 import {REDMINE_ISSUES_URL} from 'Data/urls';
+import ItemTypes from 'Data/item-types';
+import {issueSource} from 'Data/dnd/board';
 
 import styles from './issue.scss';
 
+
+@DragSource(ItemTypes.ISSUE, issueSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+}))
 @inject('visualStore')
 @observer
 class Issue extends Component {
     get branchName() {
-        const {issue: {id}, subject} = this.props;
+        const {issue: {id, subject}} = this.props;
 
         return `feature/${id}-${getSlug(subject)}`;
     }
@@ -34,13 +42,13 @@ class Issue extends Component {
     };
 
     render() {
-        const {issue, issue: {id, subject}, visualStore} = this.props;
+        const {connectDragSource, issue, issue: {id, subject}, visualStore} = this.props;
 
-        return (
+        return connectDragSource(
             <div className={styles.issue}>
                 {visualStore.popups.has(id) && (
                     <Popup id={id}>
-                        <EditIssue {...issue}/>
+                        <EditIssue issue={issue}/>
                     </Popup>
                 )}
                 <strong onClick={this.handleSubjectClick}>{subject}</strong>

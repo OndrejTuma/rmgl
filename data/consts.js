@@ -1,0 +1,1 @@
+export const REDMINE_CLOSED_STATUS_ID = 5;

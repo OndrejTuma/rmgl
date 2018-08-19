@@ -1,5 +1,7 @@
 import {action, observable} from 'mobx';
 
+import {REDMINE_CLOSED_STATUS_ID} from 'Data/consts';
+
 class BoardStore {
     @observable
     statuses = [];
@@ -34,7 +36,14 @@ class BoardStore {
 
     @action
     setStatuses(statuses) {
-        this.statuses = statuses;
+        this.statuses = statuses.filter(status => status.id !== REDMINE_CLOSED_STATUS_ID);
+    }
+
+    @action
+    updateIssue(issue) {
+        //TODO: seems like i have to delete issue and set it again to trigger reaction
+        this.deleteIssue(issue.id);
+        this.setIssue(issue);
     }
 }
 

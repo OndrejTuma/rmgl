@@ -1,6 +1,8 @@
 import {Component} from 'react';
 import Head from 'next/head';
 import {Provider, inject} from 'mobx-react';
+import {DragDropContextProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import Board from 'Components/Board';
 
@@ -63,7 +65,9 @@ export default class extends Component {
     render() {
         return (
             <Provider {...stores}>
-                <Index {...this.props}/>
+                <DragDropContextProvider backend={HTML5Backend}>
+                    <Index {...this.props}/>
+                </DragDropContextProvider>
             </Provider>
         )
     }

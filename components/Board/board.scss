@@ -1,3 +1,17 @@
+.board {
+    position: relative;
+}
+.fetching {
+    align-items: center;
+    background-color: rgba(#ccc, .7);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
 .wrapper {
     display: flex;
     flex-flow: row nowrap;
