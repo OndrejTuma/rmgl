@@ -1,0 +1,72 @@
+import {Component} from 'react';
+import {inject, observer} from 'mobx-react';
+
+import Button from '../Button';
+import Form from '../Form';
+import FormInput from '../FormInput';
+import FormSelect from '../FormSelect';
+import Textarea from '../Textarea';
+
+import {REDMINE_NEW_STATUS_ID, REDMINE_PROJECT_ID} from 'Data/consts';
+import {createIssue} from 'Data/api/redmine';
+
+import styles from './new-issue.scss';
+
+@inject('boardStore', 'generalStore', 'teamStore', 'visualStore')
+@observer
+class NewIssue extends Component {
+
+    get usersOptions() {
+        const {teamStore} = this.props;
+        const options = {};
+
+        teamStore.members.forEach(member => options[member.redmine_id] = `${member.firstname} ${member.lastname}`);
+
+        return options;
+    }
+
+    handleSubmit = async elements => {
+        const {boardStore, generalStore, identifier} = this.props;
+
+        generalStore.setFetching(identifier);
+
+        const issue_props = {
+            project_id: REDMINE_PROJECT_ID,
+            assigned_to_id: parseInt(elements.get('assigned_to_id')),
+            status_id: REDMINE_NEW_STATUS_ID,
+            description: elements.get('description'),
+            subject: elements.get('subject'),
+        };
+
+        createIssue({issue: issue_props}).then(response => {
+            generalStore.deleteFetching(identifier);
+
+            boardStore.setIssue(response.issue);
+
+            this.props.visualStore.deletePopup(identifier);
+        });
+    };
+
+    render() {
+        const {generalStore, id, teamStore: {active_member_redmine_id}} = this.props;
+
+        return (
+            <div>
+                <h3 className={styles.heading}>New task</h3>
+                <Form onSubmit={this.handleSubmit}>
+                    <FormInput label={'Subject:'} name={'subject'}/>
+                    <FormSelect
+                        label={'Assigned to:'}
+                        name={'assigned_to_id'}
+                        options={this.usersOptions}
+                        selected={active_member_redmine_id}
+                    />
+                    <Textarea label={'Description:'} name={'description'}/>
+                    <Button label={'Create issue'} busy={generalStore.fetching.has(id)}/>
+                </Form>
+            </div>
+        )
+    }
+}
+
+export default NewIssue;

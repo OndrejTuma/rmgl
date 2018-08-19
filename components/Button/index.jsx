@@ -7,10 +7,10 @@ import styles from './button.scss';
 
 class Button extends Component {
     render() {
-        const {label, busy, type} = this.props;
+        const {label, busy, onClick, type} = this.props;
 
         return (
-            <button type={type} className={styles.button}>
+            <button type={type} className={styles.button} onClick={onClick}>
                 {busy ? <SpinnerSVG width={20} height={20} className={classNames('spinner', styles.spinner)}/> : label}
             </button>
         );

@@ -58,7 +58,7 @@ async function restFetch(url, method, data) {
         throw new ApiError(ERR_BACKEND, ERR_BACKEND_MSG);
     }
 
-    if (method !== 'GET') {
+    if (method !== 'GET' && method !== 'POST') {
         return result;
     }
 
