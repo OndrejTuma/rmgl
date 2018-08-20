@@ -110,17 +110,28 @@ class Issue extends Component {
                         className={styles.git}
                         src={'static/images/git.png'}
                         alt={'Copy Git Branch'}
+                        title={'Copy Git Branch'}
                         onClick={this.handleGitClick}
                     />
                     <a href={`${REDMINE_ISSUES_URL}${id}`} target={'_blank'}>
                         <img src={'static/images/redmine.png'}
                              alt={'Go to redmine task'}
-                             onClick={this.handleGitClick}
-                        />
+                             title={'Go to redmine task'}
+                             onClick={this.handleGitClick}/>
                     </a>
                     {mergeRequest
-                        ? <a href={mergeRequest.web_url} target={'_blank'}><GitMergeSVG width={20} height={20}/></a>
-                        : <img src={'static/images/gitlab.png'} alt={'Go to redmine task'} onClick={this.handleGitlabClick}/>
+                        ? (
+                            <a href={mergeRequest.web_url} target={'_blank'} title={'Go to merge request'}>
+                                <GitMergeSVG width={20} height={20}/>
+                            </a>
+                        )
+                        : (
+                            <img
+                                src={'static/images/gitlab.png'}
+                                alt={'Create merge request'}
+                                title={'Create merge request'}
+                                onClick={this.handleGitlabClick}/>
+                        )
                     }
                     <GarbageSVG width={20} height={20} onClick={this.handleDeleteClick}/>
                 </div>

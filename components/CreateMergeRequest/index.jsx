@@ -39,7 +39,7 @@ class CreateMergeRequest extends Component {
             title: elements.get('title'),
             remove_source_branch: true,
             squash: true,
-            labels: GITLAB_LABELS.frontend,
+            labels: GITLAB_LABELS.get('frontend'),
         };
 
         createMergeRequest(data).then(response => {
