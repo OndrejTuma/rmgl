@@ -7,6 +7,23 @@ class GitlabStore {
     @observable
     merge_requests_assigned_to_me = [];
 
+    getMyMergeRequestByIssueId(id) {
+        for (const mr of this.my_merge_requests) {
+            if (mr.title.includes(id)) {
+                return mr;
+            }
+        }
+
+        return false;
+    }
+
+    @action
+    deleteMergeRequestAssignedToMeByIid(iid) {
+        this.setMergeRequestsAssignedToMe(
+            this.merge_requests_assigned_to_me.filter(merge_request => merge_request.iid !== iid)
+        );
+    }
+
     @action
     setMergeRequestsAssignedToMe(merge_requests) {
         this.merge_requests_assigned_to_me = merge_requests;
@@ -15,6 +32,11 @@ class GitlabStore {
     @action
     setMyMergeRequests(merge_requests) {
         this.my_merge_requests = merge_requests;
+    }
+
+    @action
+    addMyMergeRequest(merge_request) {
+        this.my_merge_requests.push(merge_request);
     }
 }
 

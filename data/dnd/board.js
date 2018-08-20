@@ -29,6 +29,7 @@ export const issueSource = {
                 generalStore.deleteFetching('issues');
 
                 if (!response.ok) {
+                    console.log(response);
                     alert('Something went wrong:(');
                     return;
                 }

@@ -9,7 +9,7 @@ class Textarea extends Component {
         return (
             <div className={styles.wrapper}>
                 <label htmlFor={`form-${name}`}>{label}</label>
-                <textarea name={name} id={`form-${name}`}>{value}</textarea>
+                <textarea name={name} id={`form-${name}`} defaultValue={value}/>
             </div>
         );
     }

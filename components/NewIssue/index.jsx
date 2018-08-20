@@ -26,7 +26,7 @@ class NewIssue extends Component {
     }
 
     handleSubmit = async elements => {
-        const {redmineStore, generalStore, identifier} = this.props;
+        const {redmineStore, generalStore, identifier, visualStore} = this.props;
 
         generalStore.setFetching(identifier);
 
@@ -43,7 +43,7 @@ class NewIssue extends Component {
 
             redmineStore.setIssue(response.issue);
 
-            this.props.visualStore.deletePopup(identifier);
+            visualStore.deletePopup(identifier);
         });
     };
 
@@ -54,7 +54,7 @@ class NewIssue extends Component {
             <div>
                 <h3 className={styles.heading}>New task</h3>
                 <Form onSubmit={this.handleSubmit}>
-                    <FormInput label={'Subject:'} name={'subject'}/>
+                    <FormInput autofocus={true} label={'Subject:'} name={'subject'}/>
                     <FormSelect
                         label={'Assigned to:'}
                         name={'assigned_to_id'}

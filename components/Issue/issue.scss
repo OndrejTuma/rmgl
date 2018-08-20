@@ -4,11 +4,23 @@
         margin-right: 5px;
         width: 20px;
     }
+    .git {
+        &:active {
+            :global {
+                animation: active 1s 1;
+            }
+        }
+    }
 }
 .issue {
     img,
+    small,
     strong,
     svg {
         cursor: pointer;
+    }
+
+    small {
+        display: block;
     }
 }

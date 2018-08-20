@@ -9,6 +9,13 @@ class FormInput extends Component {
         value: '',
     };
 
+    _focus() {
+        Promise.resolve().then(() => {
+            this.input.focus();
+            this.input.select();
+        });
+    }
+
     handleBlur = () => {
         this.setState({focused: false});
     };
@@ -20,6 +27,13 @@ class FormInput extends Component {
     handleFocus = () => {
         this.setState({focused: true});
     };
+
+    componentDidMount() {
+        const {autofocus, value} = this.props;
+
+        autofocus && this._focus();
+        value && this.setState({value});
+    }
 
     render() {
         const {className, errorText, hasError, id, label, name, type} = this.props;
@@ -34,13 +48,15 @@ class FormInput extends Component {
                 [styles.hasError]: hasError,
             })}>
                 {label && <label className={styles.label} htmlFor={id}>{label}</label>}
-                <input id={id} type={type}
+                <input id={id}
+                       type={type}
                        value={value}
                        name={name}
                        ref={el => this.input = el}
                        onFocus={this.handleFocus}
                        onBlur={this.handleBlur}
-                       onChange={this.handleChange}/>
+                       onChange={this.handleChange}
+                />
                 {errorText && <p className={styles.error}>{errorText}</p>}
             </div>
         );
@@ -48,6 +64,7 @@ class FormInput extends Component {
 }
 
 FormInput.defaultProps = {
+    autofocus: false,
     hasError: false,
     type: 'text',
 };

@@ -5,6 +5,7 @@ import copy from 'copy-to-clipboard';
 import {DragSource} from 'react-dnd';
 
 import EditIssue from '../EditIssue';
+import CreateMergeRequest from '../CreateMergeRequest';
 import Popup from '../Popup';
 
 import {updateIssue} from 'Data/api/redmine';
@@ -14,6 +15,7 @@ import ItemTypes from 'Data/item-types';
 import {issueSource} from 'Data/dnd/board';
 
 import GarbageSVG from 'Svg/garbage.svg';
+import GitMergeSVG from 'Svg/git-merge.svg';
 
 import styles from './issue.scss';
 
@@ -22,7 +24,7 @@ import styles from './issue.scss';
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
 }))
-@inject('redmineStore','visualStore')
+@inject('gitlabStore', 'redmineStore', 'visualStore')
 @observer
 class Issue extends Component {
     get branchName() {
@@ -31,8 +33,14 @@ class Issue extends Component {
         return `feature/${id}-${getSlug(subject)}`;
     }
 
+    get mergeId() {
+        const {issue: {id}} = this.props;
+
+        return `merge-${id}`;
+    }
+
     handleDeleteClick = () => {
-        if (!confirm('Are you sure you want to mark this issue as solved?')) {
+        if (!confirm('Close issue?')) {
             return;
         }
 
@@ -44,6 +52,7 @@ class Issue extends Component {
             }
         }).then(response => {
             if (!response.ok) {
+                console.log(response);
                 alert('Something went wrong:(');
                 return;
             }
@@ -57,7 +66,13 @@ class Issue extends Component {
     };
 
     handleGitlabClick = () => {
+        const {visualStore} = this.props;
 
+        visualStore.setPopup(this.mergeId);
+    };
+
+    handleIdClick = () => {
+        copy(this.props.issue.id);
     };
 
     handleSubjectClick = () => {
@@ -67,23 +82,46 @@ class Issue extends Component {
     };
 
     render() {
-        const {connectDragSource, issue, issue: {id, subject}, visualStore} = this.props;
+        const {connectDragSource, gitlabStore, issue, issue: {id, subject}, visualStore} = this.props;
+        const mergeId = this.mergeId;
+        const mergeRequest = gitlabStore.getMyMergeRequestByIssueId(id);
 
         return connectDragSource(
             <div className={styles.issue}>
+                {visualStore.popups.has(mergeId) && (
+                    <Popup id={mergeId}>
+                        <CreateMergeRequest
+                            popup_id={mergeId}
+                            title={`#${id}: ${subject}`}
+                            source_branch={this.branchName}
+                            description={'cc @marek, @vlad.opaets, @andrej.baran'}
+                        />
+                    </Popup>
+                )}
                 {visualStore.popups.has(id) && (
                     <Popup id={id}>
                         <EditIssue issue={issue}/>
                     </Popup>
                 )}
                 <strong onClick={this.handleSubjectClick}>{subject}</strong>
+                <small onClick={this.handleIdClick}>({id})</small>
                 <div className={styles.actions}>
-                    <img src={'static/images/git.png'} alt={'Copy Git Branch'} onClick={this.handleGitClick}/>
+                    <img
+                        className={styles.git}
+                        src={'static/images/git.png'}
+                        alt={'Copy Git Branch'}
+                        onClick={this.handleGitClick}
+                    />
                     <a href={`${REDMINE_ISSUES_URL}${id}`} target={'_blank'}>
-                        <img src={'static/images/redmine.png'} alt={'Go to redmine task'}
-                             onClick={this.handleGitClick}/>
+                        <img src={'static/images/redmine.png'}
+                             alt={'Go to redmine task'}
+                             onClick={this.handleGitClick}
+                        />
                     </a>
-                    <img src={'static/images/gitlab.png'} alt={'Go to redmine task'} onClick={this.handleGitlabClick}/>
+                    {mergeRequest
+                        ? <a href={mergeRequest.web_url} target={'_blank'}><GitMergeSVG width={20} height={20}/></a>
+                        : <img src={'static/images/gitlab.png'} alt={'Go to redmine task'} onClick={this.handleGitlabClick}/>
+                    }
                     <GarbageSVG width={20} height={20} onClick={this.handleDeleteClick}/>
                 </div>
             </div>
