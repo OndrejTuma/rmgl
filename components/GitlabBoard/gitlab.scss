@@ -1,0 +1,16 @@
+.board {
+    background-color: #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+
+    a {
+        color: inherit;
+    }
+    li + li {
+        margin-top: 10px;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+}

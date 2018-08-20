@@ -5,7 +5,8 @@ import {DragDropContextProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import Board from 'Components/Board';
-import NewTask from 'Components/NewTask';
+import GitlabBoard from 'Components/GitlabBoard';
+import NewIssueButton from 'Components/NewIssueButton';
 
 import {getStore as getErrorsStore} from 'Data/state/errors';
 import {getStore as getGeneralStore} from 'Data/state/general';
@@ -79,7 +80,8 @@ class Index extends Component {
                     <title>RMGL | Homepage</title>
                 </Head>
 
-                <NewTask/>
+                <GitlabBoard/>
+                <NewIssueButton/>
                 <Board/>
             </div>
         )

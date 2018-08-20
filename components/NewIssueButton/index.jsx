@@ -7,10 +7,10 @@ import Popup from '../Popup';
 
 @inject('visualStore')
 @observer
-class NewTask extends Component {
+class NewIssueButton extends Component {
     identifier = 'new-task';
 
-    handleNewTaskClick = () => {
+    handleNewIssueButtonClick = () => {
         const {visualStore} = this.props;
 
         visualStore.setPopup(this.identifier);
@@ -21,7 +21,7 @@ class NewTask extends Component {
 
         return (
             <div>
-                <Button label={'New task'} onClick={this.handleNewTaskClick}/>
+                <Button label={'New task'} onClick={this.handleNewIssueButtonClick}/>
                 {visualStore.popups.has(this.identifier) && (
                     <Popup id={this.identifier}>
                         <NewIssue identifier={this.identifier}/>
@@ -32,4 +32,4 @@ class NewTask extends Component {
     }
 }
 
-export default NewTask;
+export default NewIssueButton;
