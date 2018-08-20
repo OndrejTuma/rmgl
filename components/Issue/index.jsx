@@ -22,7 +22,7 @@ import styles from './issue.scss';
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
 }))
-@inject('boardStore','visualStore')
+@inject('redmineStore','visualStore')
 @observer
 class Issue extends Component {
     get branchName() {
@@ -35,8 +35,8 @@ class Issue extends Component {
         if (!confirm('Are you sure you want to mark this issue as solved?')) {
             return;
         }
-        
-        const {boardStore, issue: {id}} = this.props;
+
+        const {redmineStore, issue: {id}} = this.props;
 
         updateIssue(id, {
             issue: {
@@ -48,7 +48,7 @@ class Issue extends Component {
                 return;
             }
 
-            boardStore.deleteIssue(id);
+            redmineStore.deleteIssue(id);
         });
     };
 

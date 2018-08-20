@@ -7,7 +7,7 @@ import SpinnerSVG from 'Svg/spinner.svg';
 
 import styles from './board.scss';
 
-@inject('boardStore', 'generalStore')
+@inject('redmineStore', 'generalStore')
 @observer
 class Board extends Component {
     get is_fetching() {
@@ -15,10 +15,10 @@ class Board extends Component {
     }
 
     render() {
-        const {boardStore} = this.props;
+        const {redmineStore} = this.props;
 
         //TODO: for some reason, without tapping into items, reaction doesnt trigger on issue update
-        const size = this.props.boardStore.issues.size;
+        const size = this.props.redmineStore.issues.size;
 
         return (
             <div className={styles.board}>
@@ -29,8 +29,8 @@ class Board extends Component {
                 )}
 
                 <div className={styles.wrapper}>
-                    {boardStore.statuses.map(status => (
-                        <Status key={status.id} issues={boardStore.getIssuesByStatus(status.id)} {...status}/>
+                    {redmineStore.statuses.map(status => (
+                        <Status key={status.id} issues={redmineStore.getIssuesByStatus(status.id)} {...status}/>
                     ))}
                 </div>
             </div>

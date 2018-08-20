@@ -12,7 +12,7 @@ import {createIssue} from 'Data/api/redmine';
 
 import styles from './new-issue.scss';
 
-@inject('boardStore', 'generalStore', 'teamStore', 'visualStore')
+@inject('redmineStore', 'generalStore', 'teamStore', 'visualStore')
 @observer
 class NewIssue extends Component {
 
@@ -26,7 +26,7 @@ class NewIssue extends Component {
     }
 
     handleSubmit = async elements => {
-        const {boardStore, generalStore, identifier} = this.props;
+        const {redmineStore, generalStore, identifier} = this.props;
 
         generalStore.setFetching(identifier);
 
@@ -41,14 +41,14 @@ class NewIssue extends Component {
         createIssue({issue: issue_props}).then(response => {
             generalStore.deleteFetching(identifier);
 
-            boardStore.setIssue(response.issue);
+            redmineStore.setIssue(response.issue);
 
             this.props.visualStore.deletePopup(identifier);
         });
     };
 
     render() {
-        const {generalStore, id, teamStore: {active_member_redmine_id}} = this.props;
+        const {generalStore, id, teamStore: {active_member}} = this.props;
 
         return (
             <div>
@@ -59,7 +59,7 @@ class NewIssue extends Component {
                         label={'Assigned to:'}
                         name={'assigned_to_id'}
                         options={this.usersOptions}
-                        selected={active_member_redmine_id}
+                        selected={active_member.redmine_id}
                     />
                     <Textarea label={'Description:'} name={'description'}/>
                     <Button label={'Create issue'} busy={generalStore.fetching.has(id)}/>

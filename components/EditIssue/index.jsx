@@ -10,15 +10,15 @@ import {updateIssue} from 'Data/api/redmine';
 
 import styles from './edit-issue.scss';
 
-@inject('boardStore', 'generalStore', 'teamStore', 'visualStore')
+@inject('generalStore', 'redmineStore', 'teamStore', 'visualStore')
 @observer
 class EditIssue extends Component {
 
     get statusesOptions() {
-        const {boardStore} = this.props;
+        const {redmineStore} = this.props;
         const options = {};
 
-        boardStore.statuses.forEach(status => options[status.id] = status.name);
+        redmineStore.statuses.forEach(status => options[status.id] = status.name);
 
         return options;
     }
@@ -33,7 +33,7 @@ class EditIssue extends Component {
     }
 
     handleSubmit = async elements => {
-        const {boardStore, generalStore, issue} = this.props;
+        const {redmineStore, generalStore, issue, teamStore: {active_member}, visualStore} = this.props;
 
         generalStore.setFetching(issue.id);
 
@@ -51,19 +51,19 @@ class EditIssue extends Component {
                 return;
             }
 
-            //issue update
-            boardStore.updateIssue({
-                ...issue,
-                assigned_to: {
-                    id: changed_issue_props.assigned_to_id,
-                },
-                status: {
-                    id: changed_issue_props.status_id
-                },
-                last_update: new Date(),
-            });
+            if (changed_issue_props.assigned_to_id !== active_member.redmine_id) {
+                redmineStore.deleteIssue(issue.id);
+            }
+            else {
+                redmineStore.updateIssue({
+                    ...issue,
+                    assigned_to: { id: changed_issue_props.assigned_to_id },
+                    status: { id: changed_issue_props.status_id },
+                    last_update: new Date(),
+                });
+            }
 
-            this.props.visualStore.deletePopup(issue.id);
+            visualStore.deletePopup(issue.id);
         });
     };
 

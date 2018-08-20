@@ -1,9 +1,9 @@
 import {updateIssue} from 'Data/api/redmine';
-import {getStore as getBoardStore} from 'Data/state/board';
+import {getStore as getRedmineStore} from 'Data/state/redmine';
 import {getStore as getGeneralStore} from 'Data/state/general';
 
-const boardStore = getBoardStore();
 const generalStore = getGeneralStore();
+const redmineStore = getRedmineStore();
 
 export const issueSource = {
     beginDrag({issue}) {
@@ -33,7 +33,7 @@ export const issueSource = {
                     return;
                 }
 
-                boardStore.updateIssue({
+                redmineStore.updateIssue({
                     ...issue,
                     status: {
                         id: status_id

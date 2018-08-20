@@ -1,8 +1,16 @@
 import {action, observable} from 'mobx';
 
+import {CURRENT_MEMBER_REDMINE_ID} from '../consts';
+
 class TeamStore {
     @observable
-    active_member_redmine_id = 129;
+    active_member = {};
+
+    constructor() {
+        const active_member = this.getMemberByRedmineId(CURRENT_MEMBER_REDMINE_ID);
+
+        this.setActiveMember(active_member);
+    }
 
     members = [
         {
@@ -78,8 +86,8 @@ class TeamStore {
     }
 
     @action
-    setActiveMember(redmine_id) {
-        this.active_member_redmine_id = redmine_id;
+    setActiveMember(member) {
+        this.active_member = member;
     }
 }
 

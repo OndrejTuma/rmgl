@@ -2,7 +2,7 @@ import {action, observable} from 'mobx';
 
 import {REDMINE_CLOSED_STATUS_ID} from 'Data/consts';
 
-class BoardStore {
+class RedmineStore {
     @observable
     statuses = [];
 
@@ -48,16 +48,16 @@ class BoardStore {
 }
 
 /**
- * @type BoardStore
+ * @type RedmineStore
  */
 let store;
 
 /**
- * @returns {BoardStore}
+ * @returns {RedmineStore}
  */
 export const getStore = () => {
     if (!store) {
-        store = new BoardStore();
+        store = new RedmineStore();
     }
 
     return store;
