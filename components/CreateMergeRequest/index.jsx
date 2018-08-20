@@ -57,7 +57,7 @@ class CreateMergeRequest extends Component {
 
         return (
             <div>
-                <h3 className={styles.heading}>Merge request</h3>
+                <h3 className={styles.heading}>Create merge request</h3>
                 <Form onSubmit={this.handleSubmit}>
                     <FormInput 
                         label={'Title:'} 
