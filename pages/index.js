@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import Board from 'Components/Board';
 import GitlabBoard from 'Components/GitlabBoard';
+import GenerateLogButton from 'Components/GenerateLogButton';
 import NewIssueButton from 'Components/NewIssueButton';
 
 import {getStore as getErrorsStore} from 'Data/state/errors';
@@ -81,6 +82,7 @@ class Index extends Component {
 
                 <GitlabBoard/>
                 <NewIssueButton/>
+                <GenerateLogButton/>
                 <Board/>
             </div>
         )

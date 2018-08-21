@@ -45,7 +45,6 @@ class CreateMergeRequest extends Component {
         createMergeRequest(data).then(response => {
             generalStore.deleteFetching(popup_id);
 
-            console.log(response);
             gitlabStore.addMyMergeRequest(response);
 
             visualStore.deletePopup(popup_id);

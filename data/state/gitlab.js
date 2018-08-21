@@ -1,5 +1,7 @@
 import {action, observable} from 'mobx';
 
+import {storageLog} from '../../decorators/log';
+
 class GitlabStore {
     @observable
     my_merge_requests = [];
@@ -35,6 +37,7 @@ class GitlabStore {
     }
 
     @action
+    @storageLog('gitlab', 'Merge request created')
     addMyMergeRequest(merge_request) {
         this.my_merge_requests.push(merge_request);
     }
