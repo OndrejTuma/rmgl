@@ -1,7 +1,5 @@
 import Document, {Head, Main, NextScript} from 'next/document';
 
-import 'Sass/global.scss';
-
 export default class MyDocument extends Document {
     render() {
         return (

@@ -35,6 +35,8 @@ const stores = {
     visualStore,
 };
 
+import 'Sass/global.scss';
+
 @inject('generalStore', 'gitlabStore', 'redmineStore', 'teamStore')
 class Index extends Component {
 
