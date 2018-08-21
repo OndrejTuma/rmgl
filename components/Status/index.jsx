@@ -26,7 +26,7 @@ class Status extends Component {
             <div className={classNames(styles.column, {
                 [styles.dropOver]: isOver
             })}>
-                <h2>{name}</h2>
+                <h2 className={styles.heading}>{name}</h2>
 
                 <ul className={styles.list}>
                     {issues.map(issue => (
