@@ -4,17 +4,17 @@ import {getStore as getRedmineStore} from '../data/state/redmine';
 
 const redmineStore = getRedmineStore();
 
-export function getLog(day = new Date()) {
+export function getLog(date = new Date()) {
     const activities = getActivity();
-    day = new Date(day);
+    date = new Date(date);
 
     return activities.filter(activity => {
         const activityDate = new Date(activity.date);
 
         return (
-            activityDate.getFullYear() === day.getFullYear()
-            && activityDate.getMonth() === day.getMonth()
-            && activityDate.getDate() === day.getDate()
+            activityDate.getFullYear() === date.getFullYear()
+            && activityDate.getMonth() === date.getMonth()
+            && activityDate.getDate() === date.getDate()
         )
     }).map(activity => {
         return {

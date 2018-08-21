@@ -10,15 +10,20 @@ class GenerateLogButton extends Component {
     generateLog = () => {
         const logs = getLog(new Date().getDate() - 1);
 
-        return logs.map(log => {
-            console.log(log.activity, log.message);
-        })
+        if (logs.length === 0) {
+            alert('Nothing to show');
+            return;
+        }
+
+        alert(logs.reduce((msg, log) => (
+            `${msg}${log.activity} - ${log.message}\n\n`
+        ), ''));
     };
 
     render() {
         return (
             <div className={styles.wrapper}>
-                <Button label={'Generate yesterday\'s log'} onClick={this.generateLog}/>
+                <Button label={'Show yesterday\'s log'} onClick={this.generateLog}/>
             </div>
         );
     }
