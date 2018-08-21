@@ -11,7 +11,7 @@ import Popup from '../Popup';
 import {updateIssue} from 'Data/api/redmine';
 import {REDMINE_ISSUES_URL} from 'Data/urls';
 import {REDMINE_CLOSED_STATUS_ID} from 'Data/consts';
-import ItemTypes from 'Data/item-types';
+import ItemTypes from 'Data/dnd/item-types';
 import {issueSource} from 'Data/dnd/board';
 
 import GarbageSVG from 'Svg/garbage.svg';

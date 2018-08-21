@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
             <html>
                 <Head>
                     <link rel="stylesheet" href="/_next/static/style.css"/>
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hind|Playfair+Display"/>
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hind"/>
                     <meta charSet="utf-8" key={'charset'}/>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width" key={'viewport'}/>
                 </Head>

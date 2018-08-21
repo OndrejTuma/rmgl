@@ -26,7 +26,7 @@ class NewIssue extends Component {
     }
 
     handleSubmit = async elements => {
-        const {redmineStore, generalStore, identifier, visualStore} = this.props;
+        const {redmineStore, generalStore, identifier, teamStore, visualStore} = this.props;
 
         generalStore.setFetching(identifier);
 
@@ -41,7 +41,9 @@ class NewIssue extends Component {
         createIssue({issue: issue_props}).then(response => {
             generalStore.deleteFetching(identifier);
 
-            redmineStore.setIssue(response.issue);
+            if (teamStore.active_member.redmine_id === issue_props.assigned_to_id) {
+                redmineStore.setIssue(response.issue);
+            }
 
             visualStore.deletePopup(identifier);
         });

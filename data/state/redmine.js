@@ -26,7 +26,11 @@ class RedmineStore {
 
     @action
     setIssues(issues) {
-        issues.forEach(issue => this.setIssue(issue));
+        const new_issues = new Map();
+
+        issues.forEach(issue => new_issues.set(issue.id, issue));
+
+        this.issues = new_issues;
     }
 
     @action
@@ -41,9 +45,19 @@ class RedmineStore {
 
     @action
     updateIssue(issue) {
-        //TODO: seems like i have to delete issue and set it again to trigger reaction
-        this.deleteIssue(issue.id);
-        this.setIssue(issue);
+        const new_issues = new Map();
+
+        [...this.issues.values()].forEach(new_issue => {
+            if (issue.id === new_issue.id) {
+                new_issues.set(issue.id, issue);
+
+                return;
+            }
+
+            new_issues.set(new_issue.id, new_issue);
+        });
+
+        this.issues = new_issues;
     }
 }
 

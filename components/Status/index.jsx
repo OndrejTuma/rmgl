@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Issue from '../Issue';
 
-import ItemTypes from 'Data/item-types';
+import ItemTypes from 'Data/dnd/item-types';
 import {issueTarget} from 'Data/dnd/board';
 
 import styles from './status.scss';

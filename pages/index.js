@@ -48,7 +48,6 @@ class Index extends Component {
 
         generalStore.deleteFetching('issues');
 
-        redmineStore.clearIssues();
         redmineStore.setIssues(issues.issues);
 
         gitlabStore.setMyMergeRequests(my_merge_requests);
