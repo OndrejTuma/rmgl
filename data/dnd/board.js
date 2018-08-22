@@ -1,6 +1,7 @@
 import {updateIssue} from 'Data/api/redmine';
 import {getStore as getRedmineStore} from 'Data/state/redmine';
 import {getStore as getGeneralStore} from 'Data/state/general';
+import {FETCHING} from 'Data/consts';
 
 const generalStore = getGeneralStore();
 const redmineStore = getRedmineStore();
@@ -19,14 +20,14 @@ export const issueSource = {
                 return;
             }
 
-            generalStore.setFetching('issues');
+            generalStore.setFetching(FETCHING.redmine);
 
             updateIssue(issue.id, {
                 issue: {
                     status_id
                 }
             }).then(response => {
-                generalStore.deleteFetching('issues');
+                generalStore.deleteFetching(FETCHING.redmine);
 
                 if (!response.ok) {
                     console.log(response);

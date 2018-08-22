@@ -1,7 +1,14 @@
 import {gitlabFetch} from './fetch';
 
 export async function createMergeRequest(data) {
-    return await gitlabFetch(`merge_requests`, 'POST', data);
+    return await gitlabFetch('merge_requests', 'POST', data);
+}
+
+export async function mergeMergeRequest(id, iid) {
+    return await gitlabFetch(`merge_requests/${iid}/merge`, 'PUT', {
+        id,
+        iid,
+    });
 }
 
 export async function fetchMergeRequestsAssignedTo(assignee_id) {

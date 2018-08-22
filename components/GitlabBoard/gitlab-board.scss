@@ -2,6 +2,7 @@
     background-color: #ccc;
     margin-bottom: 10px;
     padding: 10px;
+    position: relative;
 
     a {
         color: inherit;
@@ -13,4 +14,15 @@
         list-style: none;
         padding: 0;
     }
+}
+.fetching {
+    align-items: center;
+    background-color: rgba(#ccc, .7);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 }

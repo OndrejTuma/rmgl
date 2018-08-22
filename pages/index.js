@@ -4,7 +4,7 @@ import {Provider, inject} from 'mobx-react';
 import {DragDropContextProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import Board from 'Components/Board';
+import RedmineBoard from 'Components/RedmineBoard';
 import GitlabBoard from 'Components/GitlabBoard';
 import GenerateLogButton from 'Components/GenerateLogButton';
 import NewIssueButton from 'Components/NewIssueButton';
@@ -18,6 +18,8 @@ import {getStore as getVisualStore} from 'Data/state/visual';
 
 import {fetchIssues, fetchStatuses} from 'Data/api/redmine';
 import {fetchMergeRequestsAssignedTo, fetchMergeRequestsFrom} from 'Data/api/gitlab';
+
+import {FETCHING} from 'Data/consts';
 
 const errorsStore = getErrorsStore();
 const gitlabStore = getGitlabStore();
@@ -43,13 +45,13 @@ class Index extends Component {
     fetchIssuesAndMergeRequests = async () => {
         const {generalStore, gitlabStore, redmineStore, teamStore: {active_member: {gitlab_id, redmine_id}}} = this.props;
 
-        generalStore.setFetching('issues');
+        generalStore.setFetching(FETCHING.redmine);
 
         const issues = await fetchIssues(redmine_id);
         const my_merge_requests = await fetchMergeRequestsFrom(gitlab_id);
         const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedTo(gitlab_id);
 
-        generalStore.deleteFetching('issues');
+        generalStore.deleteFetching(FETCHING.redmine);
 
         redmineStore.setIssues(issues.issues);
 
@@ -85,7 +87,7 @@ class Index extends Component {
                 <GitlabBoard/>
                 <NewIssueButton/>
                 <GenerateLogButton/>
-                <Board/>
+                <RedmineBoard/>
             </div>
         )
     }

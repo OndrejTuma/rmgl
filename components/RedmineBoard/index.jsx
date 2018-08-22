@@ -3,15 +3,17 @@ import {inject, observer} from 'mobx-react';
 
 import Status from '../Status';
 
+import {FETCHING} from 'Data/consts';
+
 import SpinnerSVG from 'Svg/spinner.svg';
 
-import styles from './board.scss';
+import styles from './redmine-board.scss';
 
 @inject('redmineStore', 'generalStore')
 @observer
-class Board extends Component {
+class RedmineBoard extends Component {
     get is_fetching() {
-        return this.props.generalStore.fetching.has('issues')
+        return this.props.generalStore.fetching.has(FETCHING.redmine);
     }
 
     render() {
@@ -38,4 +40,4 @@ class Board extends Component {
     }
 }
 
-export default Board;
+export default RedmineBoard;

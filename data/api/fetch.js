@@ -8,7 +8,7 @@ import {
     ERR_FORMAT_MSG,
     ERR_NETWORK,
     ERR_NETWORK_MSG
-} from '../errors';
+} from './errors';
 
 import {
     API_KEY_GITLAB,
@@ -55,7 +55,7 @@ async function restFetch(url, method, data) {
     }
 
     if (result.status > 210) {
-        throw new ApiError(ERR_BACKEND, ERR_BACKEND_MSG);
+        throw new ApiError(ERR_BACKEND, ERR_BACKEND_MSG, result.status);
     }
 
     if (method !== 'GET' && method !== 'POST') {
