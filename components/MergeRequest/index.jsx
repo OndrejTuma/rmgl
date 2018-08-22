@@ -117,7 +117,7 @@ class MergeRequest extends Component {
                 </a>
                 <img
                     className={styles.copyBranch}
-                    src={'/static/images/git.png'}
+                    src={'static/images/git.png'}
                     alt={'Copy task branch'}
                     title={'Copy task branch'}
                     onClick={this.handleCopyBranchClick}/>
