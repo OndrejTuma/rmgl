@@ -5,6 +5,8 @@ import copy from 'copy-to-clipboard';
 import {updateMergeRequest} from 'Data/api/gitlab';
 import {GITLAB_LABELS} from 'Data/consts';
 
+import {storageLog} from '../../decorators/log';
+
 import UserCheckSVG from 'Svg/user-check.svg';
 import GitMergeSVG from 'Svg/git-merge.svg';
 
@@ -24,6 +26,18 @@ class MergeRequest extends Component {
         return labels.indexOf(GITLAB_LABELS.get('squashAndMerge')) >= 0;
     }
 
+    @storageLog('gitlab', 'Code review')
+    mergeRequestClick(merge_request) {
+        const {web_url} = merge_request;
+
+        window.open(web_url);
+    }
+
+    handleBranchClick = e => {
+        e.preventDefault();
+
+        this.mergeRequestClick(this.props.merge_request);
+    };
     handleCopyBranch = () => {
         const {merge_request: {source_branch}} = this.props;
 
@@ -54,7 +68,7 @@ class MergeRequest extends Component {
 
         return (
             <div>
-                <a href={web_url} target={'_blank'}>
+                <a href={web_url} target={'_blank'} onClick={this.handleBranchClick}>
                     {title}
                 </a>
                 <img
