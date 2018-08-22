@@ -8,6 +8,11 @@ module.exports = withSass({
         importLoaders: 1,
         localIdentName: "[local]___[hash:base64:5]",
     },
+    exportPathMap: function () {
+        return {
+            "/": { page: "/" },
+        }
+    },
     webpack: (config) => {
         config.module.rules.push(
             {
