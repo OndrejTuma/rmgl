@@ -8,6 +8,7 @@ export async function mergeMergeRequest(id, iid) {
     return await gitlabFetch(`merge_requests/${iid}/merge`, 'PUT', {
         id,
         iid,
+        merge_when_pipeline_succeeds: true,
     });
 }
 
