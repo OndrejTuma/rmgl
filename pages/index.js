@@ -94,10 +94,12 @@ class Index extends Component {
 
 export default class extends Component {
     static async getInitialProps() {
+        const {active_member: {gitlab_id, redmine_id}} = teamStore;
+
         const statuses = await fetchStatuses();
-        const issues = await fetchIssues(teamStore.active_member.redmine_id);
-        const my_merge_requests = await fetchMergeRequestsFrom(teamStore.active_member.gitlab_id);
-        const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedTo(teamStore.active_member.gitlab_id);
+        const issues = await fetchIssues(redmine_id);
+        const my_merge_requests = await fetchMergeRequestsFrom(gitlab_id);
+        const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedTo(gitlab_id);
 
         return {
             issues,
