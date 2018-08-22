@@ -12,6 +12,13 @@
         }
     }
 }
+.doneRatio {
+    background-color: #0f0;
+    display: block;
+    height: 3px;
+    margin-bottom: 3px;
+    padding-left: 3px;
+}
 .issue {
     img,
     small,
@@ -23,4 +30,8 @@
     small {
         display: block;
     }
+}
+.parent {
+    color: inherit;
+    float: right;
 }

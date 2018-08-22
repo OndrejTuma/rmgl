@@ -82,7 +82,8 @@ class Issue extends Component {
     };
 
     render() {
-        const {connectDragSource, gitlabStore, issue, issue: {id, subject}, visualStore} = this.props;
+        const {connectDragSource, gitlabStore, issue, visualStore} = this.props;
+        const {id, done_ratio, subject, parent} = issue;
         const mergeId = this.mergeId;
         const mergeRequest = gitlabStore.getMyMergeRequestByIssueId(id);
 
@@ -104,6 +105,12 @@ class Issue extends Component {
                     </Popup>
                 )}
                 <strong onClick={this.handleSubjectClick}>{subject}</strong>
+                <span className={styles.doneRatio} style={{width: `${done_ratio}%`}}></span>
+                {parent && (
+                    <a href={`${REDMINE_ISSUES_URL}${parent.id}`} target={'_blank'} className={styles.parent}>
+                        <small>parent</small>
+                    </a>
+                )}
                 <small onClick={this.handleIdClick}>({id})</small>
                 <div className={styles.actions}>
                     <img
