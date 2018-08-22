@@ -8,7 +8,7 @@ import styles from './generate-log-button.scss';
 
 class GenerateLogButton extends Component {
     generateLog = () => {
-        const logs = getLog(new Date().getDate() - 1);
+        const logs = getLog(new Date().setDate(new Date().getDate() - 1));
 
         if (logs.length === 0) {
             alert('Nothing to show');

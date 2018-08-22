@@ -6,6 +6,7 @@ const redmineStore = getRedmineStore();
 
 export function getLog(date = new Date()) {
     const activities = getActivity();
+
     date = new Date(date);
 
     return activities.filter(activity => {
