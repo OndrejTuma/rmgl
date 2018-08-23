@@ -7,7 +7,7 @@ import FormInput from '../FormInput';
 import FormSelect from '../FormSelect';
 import Textarea from '../Textarea';
 
-import {REDMINE_NEW_STATUS_ID, REDMINE_PROJECT_ID} from 'Data/consts';
+import {REDMINE_STATUS_ID_NEW, REDMINE_PROJECT_ID} from 'Data/consts';
 import {createIssue} from 'Data/api/redmine';
 
 import styles from './new-issue.scss';
@@ -33,7 +33,7 @@ class NewIssue extends Component {
         const issue_props = {
             project_id: REDMINE_PROJECT_ID,
             assigned_to_id: parseInt(elements.get('assigned_to_id')),
-            status_id: REDMINE_NEW_STATUS_ID,
+            status_id: REDMINE_STATUS_ID_NEW,
             description: elements.get('description'),
             subject: elements.get('subject'),
         };

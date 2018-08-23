@@ -1,7 +1,7 @@
 import {updateIssue} from 'Data/api/redmine';
 import {getStore as getRedmineStore} from 'Data/state/redmine';
 import {getStore as getGeneralStore} from 'Data/state/general';
-import {FETCHING} from 'Data/consts';
+import {FETCHING, STATUS_DONE_RATIOS} from 'Data/consts';
 
 const generalStore = getGeneralStore();
 const redmineStore = getRedmineStore();
@@ -22,10 +22,16 @@ export const issueSource = {
 
             generalStore.setFetching(FETCHING.redmine);
 
+            const changed_issue_props = {
+                status_id,
+            };
+
+            if (STATUS_DONE_RATIOS.has(status_id)) {
+                changed_issue_props.done_ratio = STATUS_DONE_RATIOS.get(status_id);
+            }
+
             updateIssue(issue.id, {
-                issue: {
-                    status_id
-                }
+                issue: changed_issue_props
             }).then(response => {
                 generalStore.deleteFetching(FETCHING.redmine);
 
@@ -37,6 +43,7 @@ export const issueSource = {
 
                 redmineStore.updateIssue({
                     ...issue,
+                    ...changed_issue_props,
                     status: {
                         id: status_id
                     }

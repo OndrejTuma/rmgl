@@ -2,7 +2,7 @@ import {action, observable} from 'mobx';
 
 import {storageLog} from '../../decorators/log';
 
-import {REDMINE_CLOSED_STATUS_ID} from 'Data/consts';
+import {REDMINE_STATUS_ID_CLOSED} from 'Data/consts';
 
 class RedmineStore {
     @observable
@@ -52,7 +52,7 @@ class RedmineStore {
 
     @action
     setStatuses(statuses) {
-        this.statuses = statuses.filter(status => status.id !== REDMINE_CLOSED_STATUS_ID);
+        this.statuses = statuses.filter(status => status.id !== REDMINE_STATUS_ID_CLOSED);
     }
 
     @action

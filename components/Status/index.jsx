@@ -20,10 +20,10 @@ import styles from './status.scss';
 )
 class Status extends Component {
     render() {
-        const {connectDropTarget, isOver, issues, name} = this.props;
+        const {connectDropTarget, id, isOver, issues, name} = this.props;
 
         return connectDropTarget(
-            <div className={classNames(styles.column, {
+            <div className={classNames(styles.column, `status-${id}`, {
                 [styles.dropOver]: isOver
             })}>
                 <h2 className={styles.heading}>{name}</h2>

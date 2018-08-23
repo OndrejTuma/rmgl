@@ -7,6 +7,7 @@ import FormSelect from '../FormSelect';
 import Textarea from '../Textarea';
 
 import {updateIssue} from 'Data/api/redmine';
+import {STATUS_DONE_RATIOS} from 'Data/consts';
 
 import styles from './edit-issue.scss';
 
@@ -43,6 +44,10 @@ class EditIssue extends Component {
             notes: elements.get('notes'),
         };
 
+        if (STATUS_DONE_RATIOS.has(changed_issue_props.status_id)) {
+            changed_issue_props.done_ratio = STATUS_DONE_RATIOS.get(changed_issue_props.status_id);
+        }
+
         updateIssue(issue.id, {issue: changed_issue_props}).then(response => {
             generalStore.deleteFetching(issue.id);
 
@@ -58,6 +63,7 @@ class EditIssue extends Component {
             else {
                 redmineStore.updateIssue({
                     ...issue,
+                    ...changed_issue_props,
                     assigned_to: { id: changed_issue_props.assigned_to_id },
                     status: { id: changed_issue_props.status_id },
                     last_update: new Date(),
