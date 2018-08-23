@@ -15,6 +15,14 @@ import styles from './edit-issue.scss';
 @observer
 class EditIssue extends Component {
 
+    get doneRatioOptions() {
+        const options = {};
+
+        Array.from(Array(11), (_,x) => options[x * 10] = x * 10);
+
+        return options;
+    }
+
     get statusesOptions() {
         const {redmineStore} = this.props;
         const options = {};
@@ -42,6 +50,7 @@ class EditIssue extends Component {
             assigned_to_id: parseInt(elements.get('assigned_to_id')),
             status_id: parseInt(elements.get('status_id')),
             notes: elements.get('notes'),
+            done_ratio: elements.get('done_ratio'),
         };
 
         if (STATUS_DONE_RATIOS.has(changed_issue_props.status_id)) {
@@ -75,7 +84,7 @@ class EditIssue extends Component {
     };
 
     render() {
-        const {issue: {assigned_to, id, subject, status}, generalStore} = this.props;
+        const {issue: {assigned_to, done_ratio, id, subject, status}, generalStore} = this.props;
 
         return (
             <div>
@@ -92,6 +101,12 @@ class EditIssue extends Component {
                         name={'assigned_to_id'}
                         options={this.usersOptions}
                         selected={assigned_to.id}
+                    />
+                    <FormSelect
+                        label={'Done ratio:'}
+                        name={'done_ratio'}
+                        options={this.doneRatioOptions}
+                        selected={done_ratio}
                     />
                     <Textarea label={'Comment:'} name={'notes'}/>
                     <Button label={'Save'} busy={generalStore.fetching.has(id)}/>

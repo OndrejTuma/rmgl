@@ -29,7 +29,7 @@ class MergeRequest extends Component {
         return labels.indexOf(GITLAB_LABELS.get('squashAndMerge')) >= 0;
     }
 
-    @storageLog('gitlab', 'Merged merge request')
+    @storageLog('gitlab', 'Merged')
     mergeRequestMerged(merge_request) {
         const {gitlabStore} = this.props;
         const {iid} = merge_request;
