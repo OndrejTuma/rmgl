@@ -126,7 +126,7 @@ class MergeRequest extends Component {
                         <UserCheckSVG width={20} height={20}/>
                     </span>
                 )}
-                {this.hasSquashAndMerge && (
+                {this.isMyMergeRequest && this.hasSquashAndMerge && (
                     <span className={styles.squashAndMerge} title={'Squash and merge'} onClick={this.handleMergeBranchClick}>
                         <GitMergeSVG width={20} height={20}/>
                     </span>
