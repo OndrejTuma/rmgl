@@ -42,9 +42,9 @@ class EditIssue extends Component {
     }
 
     handleSubmit = async elements => {
-        const {redmineStore, generalStore, issue, teamStore: {active_member}, visualStore} = this.props;
+        const {redmineStore, generalStore, issue, popup_id, teamStore: {active_member}, visualStore} = this.props;
 
-        generalStore.setFetching(issue.id);
+        generalStore.setFetching(popup_id);
 
         const changed_issue_props = {
             assigned_to_id: parseInt(elements.get('assigned_to_id')),
@@ -58,7 +58,7 @@ class EditIssue extends Component {
         }
 
         updateIssue(issue.id, {issue: changed_issue_props}).then(response => {
-            generalStore.deleteFetching(issue.id);
+            generalStore.deleteFetching(popup_id);
 
             if (!response.ok) {
                 console.log(response);
@@ -79,12 +79,12 @@ class EditIssue extends Component {
                 });
             }
 
-            visualStore.deletePopup(issue.id);
+            visualStore.deletePopup(popup_id);
         });
     };
 
     render() {
-        const {issue: {assigned_to, done_ratio, id, subject, status}, generalStore} = this.props;
+        const {issue: {assigned_to, done_ratio, subject, status}, generalStore, popup_id} = this.props;
 
         return (
             <div>
@@ -109,7 +109,7 @@ class EditIssue extends Component {
                         selected={done_ratio}
                     />
                     <Textarea label={'Comment:'} name={'notes'}/>
-                    <Button label={'Save'} busy={generalStore.fetching.has(id)}/>
+                    <Button label={'Save'} busy={generalStore.fetching.has(popup_id)}/>
                 </Form>
             </div>
         )

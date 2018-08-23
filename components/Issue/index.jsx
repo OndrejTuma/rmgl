@@ -5,6 +5,7 @@ import copy from 'copy-to-clipboard';
 import {DragSource} from 'react-dnd';
 
 import EditIssue from '../EditIssue';
+import SolveIssue from '../SolveIssue';
 import CreateMergeRequest from '../CreateMergeRequest';
 import Popup from '../Popup';
 
@@ -14,6 +15,7 @@ import {REDMINE_STATUS_ID_CLOSED} from 'Data/consts';
 import ItemTypes from 'Data/dnd/item-types';
 import {issueSource} from 'Data/dnd/board';
 
+import DoneAllSVG from 'Svg/done-all.svg';
 import GarbageSVG from 'Svg/garbage.svg';
 import GitMergeSVG from 'Svg/git-merge.svg';
 
@@ -34,9 +36,11 @@ class Issue extends Component {
     }
 
     get mergeId() {
-        const {issue: {id}} = this.props;
+        return `merge-${this.props.issue.id}`;
+    }
 
-        return `merge-${id}`;
+    get solveId() {
+        return `solve-${this.props.issue.id}`;
     }
 
     handleDeleteClick = () => {
@@ -59,6 +63,12 @@ class Issue extends Component {
 
             redmineStore.deleteIssue(id);
         });
+    };
+
+    handleDoneAllClick = () => {
+        const {visualStore} = this.props;
+
+        visualStore.setPopup(this.solveId);
     };
 
     handleGitClick = () => {
@@ -85,6 +95,7 @@ class Issue extends Component {
         const {connectDragSource, gitlabStore, issue, visualStore} = this.props;
         const {id, done_ratio, subject, parent} = issue;
         const mergeId = this.mergeId;
+        const solveId = this.solveId;
         const mergeRequest = gitlabStore.getMyMergeRequestByIssueId(id);
 
         return connectDragSource(
@@ -99,9 +110,14 @@ class Issue extends Component {
                         />
                     </Popup>
                 )}
+                {visualStore.popups.has(solveId) && (
+                    <Popup id={solveId}>
+                        <SolveIssue popup_id={solveId} issue={issue}/>
+                    </Popup>
+                )}
                 {visualStore.popups.has(id) && (
                     <Popup id={id}>
-                        <EditIssue issue={issue}/>
+                        <EditIssue popup_id={id} issue={issue}/>
                     </Popup>
                 )}
                 <strong onClick={this.handleSubjectClick}>{subject}</strong>
@@ -141,6 +157,7 @@ class Issue extends Component {
                         )
                     }
                     <GarbageSVG width={20} height={20} onClick={this.handleDeleteClick}/>
+                    <DoneAllSVG width={20} height={20} onClick={this.handleDoneAllClick}/>
                 </div>
             </div>
         )
