@@ -31,7 +31,7 @@ function generateLogForRedmine(data) {
     const issue = data[0];
     const status = redmineStore.getStatusById(issue.status.id);
 
-    return `${issue.subject}, status: ${status.name}`;
+    return `${issue.id}: ${issue.subject}, status: ${status.name}`;
 }
 
 function generateLogForGitlab(data) {
