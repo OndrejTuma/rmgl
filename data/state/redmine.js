@@ -25,7 +25,6 @@ class RedmineStore {
     }
 
     @action
-    @storageLog('redmine', 'Issue deleted')
     deleteIssue(id) {
         this.issues.delete(id);
     }
