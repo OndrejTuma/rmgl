@@ -49,7 +49,9 @@ function accumulateRedmine(activities, activity) {
     const status = redmineStore.getStatusById(issue.status.id);
 
     if (existing_activity_index >= 0) {
-        activities[existing_activity_index].status.push(status.name);
+        if (activities[existing_activity_index].status.indexOf(status.name) < 0) {
+            activities[existing_activity_index].status.push(status.name);
+        }
     }
     else {
         activities.push({

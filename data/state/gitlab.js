@@ -37,7 +37,6 @@ class GitlabStore {
     }
 
     @action
-    @storageLog('gitlab', 'Merge request created')
     addMyMergeRequest(merge_request) {
         this.my_merge_requests.push(merge_request);
     }
