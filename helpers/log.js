@@ -29,13 +29,16 @@ export function getLogs(date = new Date()) {
 }
 
 function accumulateGitlab(activities, activity) {
+    const existing_activity_index = getActivityIndexById(activities, activity.data[0].id);
     const merge_request = activity.data[0];
 
-    activities.push({
-        ...activity,
-        name: `${activity.activity} - ${merge_request.title}`,
-        status: [],
-    });
+    if (existing_activity_index < 0 || activities[existing_activity_index].activity !== activity.activity) {
+        activities.push({
+            ...activity,
+            name: `${activity.activity} - ${merge_request.title}`,
+            status: [],
+        });
+    }
 }
 
 function accumulateRedmine(activities, activity) {
@@ -68,17 +71,5 @@ function getActivityIndexById(activities, id) {
             return index;
         }
     }
-}
-
-function generateLogForRedmine(data) {
-    const issue = data[0];
-    const status = redmineStore.getStatusById(issue.status.id);
-
-    return `#${issue.id}: ${issue.subject}, status: ${status.name}`;
-}
-
-function generateLogForGitlab(data) {
-    const merge_request = data[0];
-
-    return `${merge_request.title}`;
+    return -1;
 }
