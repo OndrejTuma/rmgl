@@ -67,6 +67,12 @@ class TeamStore {
             redmine_id: 229,
             gitlab_id: 11,
         },
+        {
+            firstname: 'Vlad',
+            lastname: 'Opaets',
+            redmine_id: 294,
+            gitlab_id: 27,
+        },
     ];
 
     getMemberByRedmineId(id) {

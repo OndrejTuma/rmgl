@@ -59,7 +59,7 @@ function accumulateRedmine(activities, activity) {
     else {
         activities.push({
             ...activity,
-            name: `#${issue.id}: ${issue.subject}`,
+            name: `\`${issue.id}\`: ${issue.subject}`,
             status: [status.name],
         })
     }

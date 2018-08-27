@@ -7,7 +7,7 @@ import FormInput from '../FormInput';
 import FormSelect from '../FormSelect';
 import Textarea from '../Textarea';
 
-import {GITLAB_PROJECT_ID, GITLAB_LABELS, GIT_MASTER_BRANCH} from 'Data/consts';
+import {GITLAB_PROJECT_ID, GITLAB_LABELS, GIT_MASTER_BRANCH, MAREK_GITLAB_ID} from 'Data/consts';
 import {createMergeRequest} from 'Data/api/gitlab';
 
 import styles from './create-merge-request.scss';
@@ -52,7 +52,7 @@ class CreateMergeRequest extends Component {
     };
 
     render() {
-        const {description, generalStore, popup_id, teamStore: {active_member}, title} = this.props;
+        const {description, generalStore, popup_id, title} = this.props;
 
         return (
             <div>
@@ -67,7 +67,7 @@ class CreateMergeRequest extends Component {
                         label={'Assigned to:'}
                         name={'assignee_id'}
                         options={this.usersOptions}
-                        selected={active_member.gitlab_id}
+                        selected={MAREK_GITLAB_ID}
                     />
                     <Textarea label={'Description:'} name={'description'} value={description}/>
                     <Button label={'Create merge request'} busy={generalStore.fetching.has(popup_id)}/>
