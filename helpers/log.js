@@ -4,6 +4,7 @@ import {getStore as getRedmineStore} from '../data/state/redmine';
 import {getStore as getTeamStore} from '../data/state/team';
 import {CURRENT_MEMBER_REDMINE_ID} from '../data/consts';
 import ACTIVITIES from '../decorators/activity-types';
+import PLATFORMS from '../decorators/platform-types';
 
 const redmineStore = getRedmineStore();
 const teamStore = getTeamStore();
@@ -26,7 +27,7 @@ export function getLogs(date = new Date()) {
     })
         .reduce((accumulator, activity) => {
 
-            activity.platform === 'redmine'
+            activity.platform === PLATFORMS.REDMINE
                 ? accumulateRedmine(accumulator, activity)
                 : accumulateGitlab(accumulator, activity);
 

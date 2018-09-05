@@ -9,6 +9,7 @@ import {FETCHING, GITLAB_LABELS} from 'Data/consts';
 
 import {storageLog} from '../../decorators/log';
 import ACTIVITIES from '../../decorators/activity-types';
+import PLATFORMS from '../../decorators/platform-types';
 
 import UserCheckSVG from 'Svg/user-check.svg';
 import GitMergeSVG from 'Svg/git-merge.svg';
@@ -30,7 +31,7 @@ class MergeRequest extends Component {
         return labels.indexOf(GITLAB_LABELS.get('squashAndMerge')) >= 0;
     }
 
-    @storageLog('gitlab', ACTIVITIES.MERGED)
+    @storageLog(PLATFORMS.GITLAB, ACTIVITIES.MERGED)
     mergeRequestMerged(merge_request) {
         const {gitlabStore} = this.props;
         const {iid} = merge_request;
@@ -38,7 +39,7 @@ class MergeRequest extends Component {
         gitlabStore.deleteMergeRequestAssignedToMeByIid(iid);
     }
 
-    @storageLog('gitlab', ACTIVITIES.CODE_REVIEW)
+    @storageLog(PLATFORMS.GITLAB, ACTIVITIES.CODE_REVIEW)
     mergeRequestClick(merge_request) {
         const {web_url} = merge_request;
 
