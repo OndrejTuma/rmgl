@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import copy from 'copy-to-clipboard';
 
 import Button from '../Button';
 
@@ -23,9 +24,12 @@ class GenerateLogButton extends Component {
             return;
         }
 
-        alert(logs.reduce((msg, log) => (
+        const logs_in_string = logs.reduce((msg, log) => (
             `${msg}> ${log.name} ${log.status.length > 0 ? `(${log.status.join(' - ')})` : ''}\n`
-        ), ''));
+        ), '');
+
+        copy(logs_in_string);
+        alert(logs_in_string);
     };
 
     render() {

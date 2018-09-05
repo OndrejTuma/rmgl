@@ -1,6 +1,7 @@
 import {action, observable} from 'mobx';
 
 import {storageLog} from '../../decorators/log';
+import ACTIVITIES from '../../decorators/activity-types';
 
 import {REDMINE_STATUS_ID_CLOSED, REDMINE_STATUS_ID_SOLVED} from 'Data/consts';
 
@@ -44,7 +45,7 @@ class RedmineStore {
     }
 
     @action
-    @storageLog('redmine', 'Issue created')
+    @storageLog('redmine', ACTIVITIES.ISSUE_CREATED)
     setIssue(issue) {
         this.issues.set(issue.id, issue);
     }
@@ -57,7 +58,7 @@ class RedmineStore {
     }
 
     @action
-    @storageLog('redmine', 'Issue updated')
+    @storageLog('redmine', ACTIVITIES.ISSUE_UPDATED)
     updateIssue(issue) {
         const new_issues = new Map();
 

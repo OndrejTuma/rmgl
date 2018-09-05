@@ -1,8 +1,14 @@
 import {getActivity} from '../helpers/localStorage';
 
 import {getStore as getRedmineStore} from '../data/state/redmine';
+import {getStore as getTeamStore} from '../data/state/team';
+import {CURRENT_MEMBER_REDMINE_ID} from '../data/consts';
+import ACTIVITIES from '../decorators/activity-types';
 
 const redmineStore = getRedmineStore();
+const teamStore = getTeamStore();
+
+const myGitlabId = teamStore.getMemberByRedmineId(CURRENT_MEMBER_REDMINE_ID).gitlab_id;
 
 export function getLogs(date = new Date()) {
     const activities = getActivity();
@@ -33,9 +39,18 @@ function accumulateGitlab(activities, activity) {
     const merge_request = activity.data[0];
 
     if (existing_activity_index < 0 || activities[existing_activity_index].activity !== activity.activity) {
+        let name;
+
+        if (myGitlabId === merge_request.author.id && activity.activity === ACTIVITIES.CODE_REVIEW) {
+            name = `Working on remarks: ${merge_request.title}`;
+        }
+        else {
+            name = `${activity.activity}: ${merge_request.title}`;
+        }
+
         activities.push({
             ...activity,
-            name: `${activity.activity} - ${merge_request.title}`,
+            name,
             status: [],
         });
     }

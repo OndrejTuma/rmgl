@@ -1,4 +1,4 @@
-import {action, computed, observable} from 'mobx';
+import {action, observable} from 'mobx';
 
 class ErrorStore {
     @observable.shallow
