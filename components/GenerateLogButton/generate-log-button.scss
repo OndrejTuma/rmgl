@@ -1,4 +1,14 @@
+.popupList {
+    li {
+        cursor: pointer;
+    }
+}
 .wrapper {
     display: block;
     margin: 10px auto;
+    text-align: center;
+
+    button {
+        margin: 0 5px;
+    }
 }

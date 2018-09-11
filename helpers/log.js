@@ -26,13 +26,29 @@ export function getLogs(date = new Date()) {
         )
     })
         .reduce((accumulator, activity) => {
-
             activity.platform === PLATFORMS.REDMINE
                 ? accumulateRedmine(accumulator, activity)
                 : accumulateGitlab(accumulator, activity);
 
             return accumulator;
         }, []);
+}
+
+export function getDaysOfActivity() {
+    const activities = getActivity();
+
+    return activities.reduce((accumulator, activity) => {
+        const date = new Date(activity.date);
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const partial_date = `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
+
+        if (accumulator.indexOf(partial_date) < 0) {
+            accumulator.push(partial_date);
+        }
+
+        return accumulator;
+    }, []);
 }
 
 function accumulateGitlab(activities, activity) {
