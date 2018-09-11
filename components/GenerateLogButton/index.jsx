@@ -31,7 +31,7 @@ class GenerateLogButton extends Component {
         }
 
         const logs_in_string = logs.reduce((msg, log) => (
-            `${msg}> ${log.name} ${log.status.length > 0 ? `(${log.status.join(' - ')})` : ''}\n`
+            `${msg}> ${log.name} ${log.status.length > 0 ? `_(${log.status.join(' - ')})_` : ''}\n`
         ), '');
 
         copy(logs_in_string);
@@ -44,7 +44,7 @@ class GenerateLogButton extends Component {
         return (
             <div className={styles.wrapper}>
                 <Button label={'Show yesterday\'s log'} onClick={() => this.generateLog()}/>
-                <Button label={'Custom logs'} onClick={this.handleCustomLogsClick}/>
+                <Button label={'Past logs'} onClick={this.handleCustomLogsClick}/>
                 {visualStore.popups.has(this.popupID) && (
                     <Popup id={this.popupID}>
                         <ul className={styles.popupList}>
