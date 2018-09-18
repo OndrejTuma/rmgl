@@ -10,7 +10,7 @@ import Textarea from '../Textarea';
 import {GITLAB_PROJECT_ID, GITLAB_LABELS, GIT_MASTER_BRANCH, MAREK_GITLAB_ID} from 'Data/consts';
 import {createMergeRequest} from 'Data/api/gitlab';
 
-import styles from './create-merge-request.scss';
+import styles from './styles.scss';
 
 @inject('generalStore', 'gitlabStore', 'teamStore', 'visualStore')
 @observer
@@ -70,7 +70,9 @@ class CreateMergeRequest extends Component {
                         selected={MAREK_GITLAB_ID}
                     />
                     <Textarea label={'Description:'} name={'description'} value={description}/>
-                    <Button label={'Create merge request'} busy={generalStore.fetching.has(popup_id)}/>
+                    <p className={styles.buttons}>
+                        <Button label={'Create merge request'} busy={generalStore.fetching.has(popup_id)}/>
+                    </p>
                 </Form>
             </div>
         )

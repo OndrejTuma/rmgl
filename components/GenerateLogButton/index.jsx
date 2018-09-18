@@ -7,7 +7,7 @@ import Popup from '../Popup';
 
 import {getLogs, getDaysOfActivity} from '../../helpers/log';
 
-import styles from './generate-log-button.scss';
+import styles from './styles.scss';
 
 @inject('visualStore')
 @observer
@@ -44,7 +44,7 @@ class GenerateLogButton extends Component {
         return (
             <div className={styles.wrapper}>
                 <Button label={'Show yesterday\'s log'} onClick={() => this.generateLog()}/>
-                <Button label={'Past logs'} onClick={this.handleCustomLogsClick}/>
+                <Button label={'All logs'} onClick={this.handleCustomLogsClick}/>
                 {visualStore.popups.has(this.popupID) && (
                     <Popup id={this.popupID}>
                         <ul className={styles.popupList}>

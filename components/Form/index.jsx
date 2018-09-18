@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 
-import styles from './form.scss';
+import styles from './styles.scss';
 
 class Form extends Component {
     handleSubmit = e => {

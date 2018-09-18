@@ -10,7 +10,7 @@ import Textarea from '../Textarea';
 import {REDMINE_STATUS_ID_NEW, REDMINE_PROJECT_ID} from 'Data/consts';
 import {createIssue} from 'Data/api/redmine';
 
-import styles from './new-issue.scss';
+import styles from './styles.scss';
 
 @inject('redmineStore', 'generalStore', 'teamStore', 'visualStore')
 @observer
@@ -64,7 +64,9 @@ class NewIssue extends Component {
                         selected={active_member.redmine_id}
                     />
                     <Textarea label={'Description:'} name={'description'}/>
-                    <Button label={'Create issue'} busy={generalStore.fetching.has(id)}/>
+                    <p className={styles.buttons}>
+                        <Button label={'Create issue'} busy={generalStore.fetching.has(id)}/>
+                    </p>
                 </Form>
             </div>
         )

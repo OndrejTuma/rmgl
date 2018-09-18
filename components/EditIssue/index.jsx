@@ -9,7 +9,7 @@ import Textarea from '../Textarea';
 import {updateIssue} from 'Data/api/redmine';
 import {STATUS_DONE_RATIOS} from 'Data/consts';
 
-import styles from './edit-issue.scss';
+import styles from './styles.scss';
 
 @inject('generalStore', 'redmineStore', 'teamStore', 'visualStore')
 @observer

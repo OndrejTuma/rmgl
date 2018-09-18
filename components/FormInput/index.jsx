@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 
-import styles from './input.scss';
+import styles from './styles.scss';
 
 class FormInput extends Component {
     state = {

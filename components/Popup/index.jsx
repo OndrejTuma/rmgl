@@ -1,7 +1,7 @@
 import {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 
-import styles from './popup.scss';
+import styles from './styles.scss';
 
 @inject('visualStore')
 @observer

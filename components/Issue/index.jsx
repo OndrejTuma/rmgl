@@ -19,8 +19,7 @@ import DoneAllSVG from 'Svg/done-all.svg';
 import GarbageSVG from 'Svg/garbage.svg';
 import GitMergeSVG from 'Svg/git-merge.svg';
 
-import styles from './issue.scss';
-
+import styles from './styles.scss';
 
 @DragSource(ItemTypes.ISSUE, issueSource, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),

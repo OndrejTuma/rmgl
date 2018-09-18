@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import styles from './textarea.scss';
+import styles from './styles.scss';
 
 class Textarea extends Component {
     render() {

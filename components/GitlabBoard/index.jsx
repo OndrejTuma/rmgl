@@ -7,7 +7,7 @@ import SpinnerSVG from 'Svg/spinner.svg';
 
 import {FETCHING} from 'Data/consts';
 
-import styles from './gitlab-board.scss';
+import styles from './styles.scss';
 
 @inject('generalStore', 'gitlabStore')
 @observer

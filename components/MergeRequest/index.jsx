@@ -14,7 +14,7 @@ import PLATFORMS from '../../decorators/platform-types';
 import UserCheckSVG from 'Svg/user-check.svg';
 import GitMergeSVG from 'Svg/git-merge.svg';
 
-import styles from './merge-request.scss';
+import styles from './styles.scss';
 
 @inject('generalStore', 'gitlabStore', 'teamStore')
 @observer

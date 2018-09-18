@@ -7,7 +7,7 @@ import {FETCHING} from 'Data/consts';
 
 import SpinnerSVG from 'Svg/spinner.svg';
 
-import styles from './redmine-board.scss';
+import styles from './styles.scss';
 
 @inject('redmineStore', 'generalStore')
 @observer

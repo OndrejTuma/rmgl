@@ -1,6 +1,6 @@
 import {Component} from 'react';
 
-import styles from './select.scss';
+import styles from './styles.scss';
 
 class FormSelect extends Component {
     render() {
