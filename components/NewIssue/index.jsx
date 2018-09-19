@@ -50,7 +50,7 @@ class NewIssue extends Component {
     };
 
     render() {
-        const {generalStore, id, teamStore: {active_member}} = this.props;
+        const {generalStore, identifier, teamStore: {active_member}} = this.props;
 
         return (
             <div>
@@ -65,7 +65,7 @@ class NewIssue extends Component {
                     />
                     <Textarea label={'Description:'} name={'description'}/>
                     <p className={styles.buttons}>
-                        <Button label={'Create issue'} busy={generalStore.fetching.has(id)}/>
+                        <Button label={'Create issue'} busy={generalStore.fetching.has(identifier)}/>
                     </p>
                 </Form>
             </div>
