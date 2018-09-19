@@ -17,16 +17,24 @@ import {
     API_URL_REDMINE,
 } from './consts';
 
-export async function redmineFetch(resource, method = 'GET', data = {}) {
-    return await restFetch(`${API_URL_REDMINE}${resource}`, method, Object.assign(data, {
-        key: API_KEY_REDMINE,
-    }));
+export async function redmineFetch(resource, method = 'GET', data = {}, api_url = API_URL_REDMINE) {
+    return await restFetch(
+        `${api_url}${resource}`,
+        method,
+        Object.assign(data, {
+            key: API_KEY_REDMINE,
+        })
+    );
 }
 
-export async function gitlabFetch(resource, method = 'GET', data = {}) {
-    return await restFetch(`${API_URL_GITLAB}${resource}`, method, Object.assign(data, {
-        private_token: API_KEY_GITLAB,
-    }));
+export async function gitlabFetch(resource, method = 'GET', data = {}, api_url = API_URL_GITLAB) {
+    return await restFetch(
+        `${api_url}${resource}`,
+        method,
+        Object.assign(data, {
+            private_token: API_KEY_GITLAB,
+        })
+    );
 }
 
 async function restFetch(url, method, data) {
@@ -72,4 +80,5 @@ async function restFetch(url, method, data) {
     return resultJson;
 }
 
-export class ApiError extends AppError {}
+export class ApiError extends AppError {
+}

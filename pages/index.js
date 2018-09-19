@@ -17,7 +17,7 @@ import {getStore as getTeamStore} from 'Data/state/team';
 import {getStore as getVisualStore} from 'Data/state/visual';
 
 import {fetchIssues, fetchStatuses} from 'Data/api/redmine';
-import {fetchMergeRequestsAssignedTo, fetchMergeRequestsFrom} from 'Data/api/gitlab';
+import {fetchMergeRequestsAssignedToMe, fetchMergeRequestsFrom} from 'Data/api/gitlab';
 
 import {FETCHING} from 'Data/consts';
 
@@ -49,7 +49,7 @@ class Index extends Component {
 
         const issues = await fetchIssues(redmine_id);
         const my_merge_requests = await fetchMergeRequestsFrom(gitlab_id);
-        const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedTo(gitlab_id);
+        const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedToMe(gitlab_id);
 
         generalStore.deleteFetching(FETCHING.redmine);
 
@@ -101,7 +101,7 @@ export default class extends Component {
         const statuses = await fetchStatuses();
         const issues = await fetchIssues(redmine_id);
         const my_merge_requests = await fetchMergeRequestsFrom(gitlab_id);
-        const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedTo(gitlab_id);
+        const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedToMe(gitlab_id);
 
         return {
             issues,
