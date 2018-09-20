@@ -109,7 +109,9 @@ class EditIssue extends Component {
                         selected={done_ratio}
                     />
                     <Textarea label={'Comment:'} name={'notes'}/>
-                    <Button label={'Save'} busy={generalStore.fetching.has(popup_id)}/>
+                    <p className={styles.buttons}>
+                        <Button label={'Save'} busy={generalStore.fetching.has(popup_id)}/>
+                    </p>
                 </Form>
             </div>
         )

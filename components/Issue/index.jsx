@@ -126,10 +126,10 @@ class Issue extends Component {
                         <small>parent</small>
                     </a>
                 )}
-                <small onClick={this.handleIdClick}>({id})</small>
+                <small onClick={this.handleIdClick} title={'Copy task id'} className={'copy'}>({id})</small>
                 <div className={styles.actions}>
                     <img
-                        className={styles.git}
+                        className={'copy'}
                         src={'static/images/git.png'}
                         alt={'Copy Git Branch'}
                         title={'Copy Git Branch'}

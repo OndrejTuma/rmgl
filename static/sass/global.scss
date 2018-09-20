@@ -5,6 +5,9 @@ body {
 }
 
 :global {
+    .copy:active {
+        animation: active 1s 1;
+    }
     .spinner {
         animation: rotate 500ms linear infinite;
     }

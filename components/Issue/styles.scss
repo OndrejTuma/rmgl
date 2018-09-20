@@ -4,13 +4,6 @@
         margin-right: 5px;
         width: 20px;
     }
-    .git {
-        &:active {
-            :global {
-                animation: active 1s 1;
-            }
-        }
-    }
 }
 .doneRatio {
     background-color: #0f0;
@@ -28,7 +21,7 @@
     }
 
     small {
-        display: block;
+        display: inline-block;
     }
 }
 .parent {
