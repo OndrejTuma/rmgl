@@ -105,7 +105,7 @@ class Issue extends Component {
                             popup_id={mergeId}
                             title={`#${id}: ${subject}`}
                             source_branch={this.branchName}
-                            description={'cc @marek, @vlad.opaets, @andrej.baran'}
+                            description={'cc @marek, @vlad.opaets'}
                         />
                     </Popup>
                 )}

@@ -64,7 +64,7 @@ class SolveIssue extends Component {
                         options={this.usersOptions}
                         selected={TOMAS_REDMINE_ID}
                     />
-                    <Textarea label={'Comment:'} name={'notes'} value={'lives on live server'}/>
+                    <Textarea label={'Comment:'} name={'notes'} value={'lives on production'}/>
                     <p className={styles.buttons}>
                         <Button label={'Save'} busy={generalStore.fetching.has(popup_id)}/>
                     </p>

@@ -41,6 +41,17 @@ import 'Sass/global.scss';
 
 @inject('generalStore', 'gitlabStore', 'redmineStore', 'teamStore')
 class Index extends Component {
+    constructor(props) {
+        super(props);
+
+        const {gitlabStore, issues, merge_requests_assigned_to_me, my_merge_requests, redmineStore, statuses} = props;
+
+        redmineStore.setStatuses(statuses.issue_statuses);
+        //redmineStore.setIssues(issues.issues);
+
+        //gitlabStore.setMyMergeRequests(my_merge_requests);
+        //gitlabStore.setMergeRequestsAssignedToMe(merge_requests_assigned_to_me);
+    }
 
     fetchIssuesAndMergeRequests = async () => {
         const {generalStore, gitlabStore, redmineStore, teamStore: {active_member: {gitlab_id, redmine_id}}} = this.props;
@@ -59,18 +70,9 @@ class Index extends Component {
         gitlabStore.setMergeRequestsAssignedToMe(merge_requests_assigned_to_me);
     };
 
-    componentWillMount() {
-        const {gitlabStore, issues, merge_requests_assigned_to_me, my_merge_requests, redmineStore, statuses} = this.props;
-
-        redmineStore.setStatuses(statuses.issue_statuses);
-        redmineStore.setIssues(issues.issues);
-
-        gitlabStore.setMyMergeRequests(my_merge_requests);
-        gitlabStore.setMergeRequestsAssignedToMe(merge_requests_assigned_to_me);
-    }
-
     componentDidMount() {
         this.refreshInterval = setInterval(this.fetchIssuesAndMergeRequests, 60000);
+        this.fetchIssuesAndMergeRequests();
     }
 
     componentWillUnmount() {
@@ -95,18 +97,19 @@ class Index extends Component {
 }
 
 export default class extends Component {
+
     static async getInitialProps() {
         const {active_member: {gitlab_id, redmine_id}} = teamStore;
 
         const statuses = await fetchStatuses();
-        const issues = await fetchIssues(redmine_id);
-        const my_merge_requests = await fetchMergeRequestsFrom(gitlab_id);
-        const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedToMe(gitlab_id);
+        //const issues = await fetchIssues(redmine_id);
+        //const my_merge_requests = await fetchMergeRequestsFrom(gitlab_id);
+        //const merge_requests_assigned_to_me = await fetchMergeRequestsAssignedToMe(gitlab_id);
 
         return {
-            issues,
-            merge_requests_assigned_to_me,
-            my_merge_requests,
+            //issues,
+            //merge_requests_assigned_to_me,
+            //my_merge_requests,
             statuses,
         };
     }
