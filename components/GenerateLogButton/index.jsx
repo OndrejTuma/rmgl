@@ -47,6 +47,7 @@ class GenerateLogButton extends Component {
                 <Button label={'All logs'} onClick={this.handleCustomLogsClick}/>
                 {visualStore.popups.has(this.popupID) && (
                     <Popup id={this.popupID}>
+                        <h2>All logs</h2>
                         <ul className={styles.popupList}>
                             {getDaysOfActivity().reverse().map(day => {
                                 const date = new Date(day);

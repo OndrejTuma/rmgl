@@ -1,6 +1,11 @@
 .popupList {
+    margin: 0;
+    padding: 0;
+
     li {
         cursor: pointer;
+        float: left;
+        margin: 10px 10px 10px 30px;
     }
 }
 .wrapper {
