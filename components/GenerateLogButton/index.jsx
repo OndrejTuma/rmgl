@@ -5,6 +5,7 @@ import copy from 'copy-to-clipboard';
 import Button from '../Button';
 import Popup from '../Popup';
 
+import {getDayNameByInt} from '../../helpers/date';
 import {getLogs, getDaysOfActivity} from '../../helpers/log';
 
 import styles from './styles.scss';
@@ -53,8 +54,12 @@ class GenerateLogButton extends Component {
                                 const date = new Date(day);
 
                                 return (
-                                    <li key={date.getTime()} onClick={() => this.generateLog(date.getTime())}>
-                                        {date.getDate()}. {date.getMonth()}. {date.getFullYear()}
+                                    <li
+                                        key={date.getTime()}
+                                        onClick={() => this.generateLog(date.getTime())}
+                                        title={`${getDayNameByInt(date.getDay())} ${date.getDate()}. ${date.getMonth()}. ${date.getFullYear()}`}
+                                    >
+                                        {date.getDate()}. {date.getMonth()}. <small>({getDayNameByInt(date.getDay())})</small>
                                     </li>
                                 )
                             })}
