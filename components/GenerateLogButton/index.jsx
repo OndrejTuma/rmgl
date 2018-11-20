@@ -5,6 +5,7 @@ import copy from 'copy-to-clipboard';
 import Button from '../Button';
 import Popup from '../Popup';
 
+import {POPUP_CUSTOM_LOG} from 'Const/popups';
 import {getDayNameByInt} from '../../helpers/date';
 import {getLogs, getDaysOfActivity} from '../../helpers/log';
 
@@ -13,14 +14,10 @@ import styles from './styles.scss';
 @inject('visualStore')
 @observer
 class GenerateLogButton extends Component {
-    get popupID() {
-        return 'custom-log-popup';
-    }
-
     handleCustomLogsClick = () => {
         const {visualStore} = this.props;
 
-        visualStore.setPopup(this.popupID);
+        visualStore.setPopup(POPUP_CUSTOM_LOG);
     };
 
     generateLog = (log_date = new Date().setDate(new Date().getDate() - 1)) => {
@@ -46,8 +43,8 @@ class GenerateLogButton extends Component {
             <div className={styles.wrapper}>
                 <Button label={'Show yesterday\'s log'} onClick={() => this.generateLog()}/>
                 <Button label={'All logs'} onClick={this.handleCustomLogsClick}/>
-                {visualStore.popups.has(this.popupID) && (
-                    <Popup id={this.popupID}>
+                {visualStore.popups.has(POPUP_CUSTOM_LOG) && (
+                    <Popup id={POPUP_CUSTOM_LOG}>
                         <h2>All logs</h2>
                         <ul className={styles.popupList}>
                             {getDaysOfActivity().reverse().map(day => {

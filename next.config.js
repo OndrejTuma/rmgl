@@ -24,6 +24,7 @@ module.exports = withSass({
 
         Object.assign(config.resolve.alias, {
             Components: path.resolve(__dirname, 'components'),
+            Const: path.resolve(__dirname, 'const'),
             Data: path.resolve(__dirname, 'data'),
             Helpers: path.resolve(__dirname, 'helpers'),
             Images: path.resolve(__dirname, 'static/images'),

@@ -26,9 +26,9 @@ class NewIssue extends Component {
     }
 
     handleSubmit = async elements => {
-        const {redmineStore, generalStore, identifier, teamStore, visualStore} = this.props;
+        const {generalStore, id, parentId, redmineStore, teamStore, visualStore} = this.props;
 
-        generalStore.setFetching(identifier);
+        generalStore.setFetching(id);
 
         const issue_props = {
             project_id: REDMINE_PROJECT_ID,
@@ -36,25 +36,26 @@ class NewIssue extends Component {
             status_id: REDMINE_STATUS_ID_NEW,
             description: elements.get('description'),
             subject: elements.get('subject'),
+            parent_issue_id: parentId,
         };
 
         createIssue({issue: issue_props}).then(response => {
-            generalStore.deleteFetching(identifier);
+            generalStore.deleteFetching(id);
 
             if (teamStore.active_member.redmine_id === issue_props.assigned_to_id) {
                 redmineStore.setIssue(response.issue);
             }
 
-            visualStore.deletePopup(identifier);
+            visualStore.deletePopup(id);
         });
     };
 
     render() {
-        const {generalStore, identifier, teamStore: {active_member}} = this.props;
+        const {generalStore, heading, id, teamStore: {active_member}} = this.props;
 
         return (
             <div>
-                <h3 className={styles.heading}>New task</h3>
+                <h3 className={styles.heading}>{heading || 'New task'}</h3>
                 <Form onSubmit={this.handleSubmit}>
                     <FormInput autofocus={true} label={'Subject:'} name={'subject'}/>
                     <FormSelect
@@ -65,7 +66,7 @@ class NewIssue extends Component {
                     />
                     <Textarea label={'Description:'} name={'description'}/>
                     <p className={styles.buttons}>
-                        <Button label={'Create issue'} busy={generalStore.fetching.has(identifier)}/>
+                        <Button label={'Create issue'} busy={generalStore.fetching.has(id)}/>
                     </p>
                 </Form>
             </div>

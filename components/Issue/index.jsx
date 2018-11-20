@@ -4,16 +4,19 @@ import getSlug from 'speakingurl';
 import copy from 'copy-to-clipboard';
 import {DragSource} from 'react-dnd';
 
-import EditIssue from '../EditIssue';
-import SolveIssue from '../SolveIssue';
 import CreateMergeRequest from '../CreateMergeRequest';
+import EditIssue from '../EditIssue';
+import NewIssue from '../NewIssue';
 import Popup from '../Popup';
+import SolveIssue from '../SolveIssue';
 
 import {updateIssue} from 'Data/api/redmine';
 import {REDMINE_ISSUES_URL} from 'Data/urls';
 import {REDMINE_STATUS_ID_CLOSED} from 'Data/consts';
 import ItemTypes from 'Data/dnd/item-types';
 import {issueSource} from 'Data/dnd/board';
+
+import {POPUP_EDIT_ISSUE, POPUP_NEW_ISSUE_FROM_ISSUE, POPUP_MERGE_ISSUE, POPUP_SOLVE_ISSUE} from 'Const/popups';
 
 import DoneAllSVG from 'Svg/done-all.svg';
 import GarbageSVG from 'Svg/garbage.svg';
@@ -28,18 +31,21 @@ import styles from './styles.scss';
 @inject('gitlabStore', 'redmineStore', 'visualStore')
 @observer
 class Issue extends Component {
+    editId = this.getUniqueId(POPUP_EDIT_ISSUE);
+    mergeId = this.getUniqueId(POPUP_MERGE_ISSUE);
+    newIssueId = this.getUniqueId(POPUP_NEW_ISSUE_FROM_ISSUE);
+    solveId = this.getUniqueId(POPUP_SOLVE_ISSUE);
+
     get branchName() {
         const {issue: {id, subject}} = this.props;
 
         return `feature/${id}-${getSlug(subject)}`;
     }
 
-    get mergeId() {
-        return `merge-${this.props.issue.id}`;
-    }
+    getUniqueId(string) {
+        const {issue: {id}} = this.props;
 
-    get solveId() {
-        return `solve-${this.props.issue.id}`;
+        return `${string}-${id}`;
     }
 
     handleDeleteClick = () => {
@@ -84,39 +90,48 @@ class Issue extends Component {
         copy(this.props.issue.id);
     };
 
-    handleSubjectClick = () => {
-        const {issue: {id}, visualStore} = this.props;
+    handleNewTaskClick = () => {
+        const {visualStore} = this.props;
 
-        visualStore.setPopup(id);
+        visualStore.setPopup(this.newIssueId);
+    };
+
+    handleSubjectClick = () => {
+        const {visualStore} = this.props;
+
+        visualStore.setPopup(this.editId);
     };
 
     render() {
         const {connectDragSource, gitlabStore, issue, visualStore} = this.props;
         const {id, done_ratio, subject, parent} = issue;
-        const mergeId = this.mergeId;
-        const solveId = this.solveId;
         const mergeRequest = gitlabStore.getMyMergeRequestByIssueId(id);
 
         return connectDragSource(
             <div className={styles.issue}>
-                {visualStore.popups.has(mergeId) && (
-                    <Popup id={mergeId}>
+                {visualStore.popups.has(this.mergeId) && (
+                    <Popup id={this.mergeId}>
                         <CreateMergeRequest
-                            popup_id={mergeId}
+                            id={this.mergeId}
                             title={`#${id}: ${subject}`}
                             source_branch={this.branchName}
                             description={'cc @marek, @vlad.opaets'}
                         />
                     </Popup>
                 )}
-                {visualStore.popups.has(solveId) && (
-                    <Popup id={solveId}>
-                        <SolveIssue popup_id={solveId} issue={issue}/>
+                {visualStore.popups.has(this.newIssueId) && (
+                    <Popup id={this.newIssueId}>
+                        <NewIssue heading={`Create a subtask of issue ${id}`} id={this.newIssueId} parentId={id}/>
                     </Popup>
                 )}
-                {visualStore.popups.has(id) && (
-                    <Popup id={id}>
-                        <EditIssue popup_id={id} issue={issue}/>
+                {visualStore.popups.has(this.solveId) && (
+                    <Popup id={this.solveId}>
+                        <SolveIssue id={this.solveId} issue={issue}/>
+                    </Popup>
+                )}
+                {visualStore.popups.has(this.editId) && (
+                    <Popup id={this.editId}>
+                        <EditIssue id={this.editId} issue={issue}/>
                     </Popup>
                 )}
                 <strong onClick={this.handleSubjectClick}>{subject}</strong>
@@ -155,6 +170,11 @@ class Issue extends Component {
                                 onClick={this.handleGitlabClick}/>
                         )
                     }
+                    <img
+                        src={'static/images/redmine-create.png'}
+                        alt={'Create subtask'}
+                        title={'Create subtask'}
+                        onClick={this.handleNewTaskClick}/>
                     <GarbageSVG width={20} height={20} onClick={this.handleDeleteClick}/>
                     <DoneAllSVG width={20} height={20} onClick={this.handleDoneAllClick}/>
                 </div>

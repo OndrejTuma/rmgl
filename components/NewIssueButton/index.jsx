@@ -5,17 +5,17 @@ import Button from '../Button';
 import NewIssue from '../NewIssue';
 import Popup from '../Popup';
 
+import {POPUP_NEW_ISSUE} from 'Const/popups';
+
 import styles from './style.scss';
 
 @inject('visualStore')
 @observer
 class NewIssueButton extends Component {
-    identifier = 'new-task';
-
     handleNewIssueButtonClick = () => {
         const {visualStore} = this.props;
 
-        visualStore.setPopup(this.identifier);
+        visualStore.setPopup(POPUP_NEW_ISSUE);
     };
 
     render() {
@@ -24,9 +24,9 @@ class NewIssueButton extends Component {
         return (
             <div className={styles.wrapper}>
                 <Button label={'New task'} onClick={this.handleNewIssueButtonClick}/>
-                {visualStore.popups.has(this.identifier) && (
-                    <Popup id={this.identifier}>
-                        <NewIssue identifier={this.identifier}/>
+                {visualStore.popups.has(POPUP_NEW_ISSUE) && (
+                    <Popup id={POPUP_NEW_ISSUE}>
+                        <NewIssue id={POPUP_NEW_ISSUE}/>
                     </Popup>
                 )}
             </div>

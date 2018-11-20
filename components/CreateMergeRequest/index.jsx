@@ -26,9 +26,9 @@ class CreateMergeRequest extends Component {
     }
 
     handleSubmit = async elements => {
-        const {generalStore, gitlabStore, popup_id, source_branch, visualStore} = this.props;
+        const {generalStore, gitlabStore, id, source_branch, visualStore} = this.props;
 
-        generalStore.setFetching(popup_id);
+        generalStore.setFetching(id);
 
         const data = {
             id: GITLAB_PROJECT_ID,
@@ -43,16 +43,16 @@ class CreateMergeRequest extends Component {
         };
 
         createMergeRequest(data).then(response => {
-            generalStore.deleteFetching(popup_id);
+            generalStore.deleteFetching(id);
 
             gitlabStore.addMyMergeRequest(response);
 
-            visualStore.deletePopup(popup_id);
+            visualStore.deletePopup(id);
         });
     };
 
     render() {
-        const {description, generalStore, popup_id, title} = this.props;
+        const {description, generalStore, id, title} = this.props;
 
         return (
             <div>
@@ -71,7 +71,7 @@ class CreateMergeRequest extends Component {
                     />
                     <Textarea label={'Description:'} name={'description'} value={description}/>
                     <p className={styles.buttons}>
-                        <Button label={'Create merge request'} busy={generalStore.fetching.has(popup_id)}/>
+                        <Button label={'Create merge request'} busy={generalStore.fetching.has(id)}/>
                     </p>
                 </Form>
             </div>

@@ -25,9 +25,9 @@ class SolveIssue extends Component {
     }
 
     handleSubmit = async elements => {
-        const {redmineStore, generalStore, issue, popup_id, visualStore} = this.props;
+        const {redmineStore, generalStore, issue, id, visualStore} = this.props;
 
-        generalStore.setFetching(popup_id);
+        generalStore.setFetching(id);
 
         const changed_issue_props = {
             assigned_to_id: parseInt(elements.get('assigned_to_id')),
@@ -37,7 +37,7 @@ class SolveIssue extends Component {
         };
 
         updateIssue(issue.id, {issue: changed_issue_props}).then(response => {
-            generalStore.deleteFetching(popup_id);
+            generalStore.deleteFetching(id);
 
             if (!response.ok) {
                 console.log(response);
@@ -47,12 +47,12 @@ class SolveIssue extends Component {
 
             redmineStore.deleteIssue(issue.id);
 
-            visualStore.deletePopup(popup_id);
+            visualStore.deletePopup(id);
         });
     };
 
     render() {
-        const {issue: {subject}, generalStore, popup_id} = this.props;
+        const {issue: {subject}, generalStore, id} = this.props;
 
         return (
             <div>
@@ -66,7 +66,7 @@ class SolveIssue extends Component {
                     />
                     <Textarea label={'Comment:'} name={'notes'} value={'lives on production'}/>
                     <p className={styles.buttons}>
-                        <Button label={'Save'} busy={generalStore.fetching.has(popup_id)}/>
+                        <Button label={'Save'} busy={generalStore.fetching.has(id)}/>
                     </p>
                 </Form>
             </div>
