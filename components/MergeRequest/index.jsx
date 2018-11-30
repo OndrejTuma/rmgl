@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 import copy from 'copy-to-clipboard';
 
-import {mergeMergeRequest, updateMergeRequest} from 'Data/api/gitlab';
+import GITLAB_ERROR_CODES from 'Const/gitlab-error-codes';
+import {mergeMergeRequest, rebaseMergeRequest, updateMergeRequest} from 'Data/api/gitlab';
 import {ERR_BACKEND} from 'Data/api/errors';
 import {ApiError} from 'Data/api/fetch';
 import {FETCHING, GITLAB_LABELS} from 'Data/consts';
@@ -56,7 +57,7 @@ class MergeRequest extends Component {
 
         copy(source_branch);
     };
-    handleMergeBranchClick = () => {
+    handleMergeBranchClick = async () => {
         if (!confirm('Merge branch?')) {
             return;
         }
@@ -66,27 +67,30 @@ class MergeRequest extends Component {
 
         generalStore.setFetching(FETCHING.gitlab);
 
-        mergeMergeRequest(id, iid)
-            .then(response => {
-                if (!response.ok) {
-                    console.log(response);
-                    alert('Something went wrong:(');
-                    return;
-                }
+        try {
+            const mergeStatus = await mergeMergeRequest(id, iid);
 
-                this.mergeRequestMerged(merge_request);
-            })
-            .catch(err => {
-                if (err instanceof ApiError) {
-                    if (err.code === ERR_BACKEND) {
-                        alert(`Server responded with HTTP status of ${err.cause}`);
-                        return;
-                    }
-                }
+            if (!mergeStatus.ok) {
+                throw new ApiError(ERR_BACKEND, 'Something went wrong:(');
+            }
 
-                console.log(err);
-            })
-            .finally(() => generalStore.deleteFetching(FETCHING.gitlab));
+            this.mergeRequestMerged(merge_request);
+        } catch (err) {
+            console.log(err.message, err.code, err.cause);
+
+            if (err instanceof ApiError && err.code === ERR_BACKEND) {
+                alert(GITLAB_ERROR_CODES[err.cause] || `Server responded with HTTP status of ${err.cause}`);
+
+                /* TODO: our gitlab does not support this feature yet
+                if (err.cause === 406) {
+                    const rebaseStatus = await rebaseMergeRequest(id, iid);
+                    console.log(rebaseStatus.message);
+                }
+                */
+            }
+        } finally {
+            generalStore.deleteFetching(FETCHING.gitlab);
+        }
     };
     handlePingBackClick = () => {
         const {generalStore, gitlabStore, merge_request: {author, iid}} = this.props;

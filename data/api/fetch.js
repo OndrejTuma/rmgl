@@ -17,8 +17,8 @@ import {
     API_URL_REDMINE,
 } from './consts';
 
-export async function redmineFetch(resource, method = 'GET', data = {}, api_url = API_URL_REDMINE) {
-    return await restFetch(
+export function redmineFetch(resource, method = 'GET', data = {}, api_url = API_URL_REDMINE) {
+    return restFetch(
         `${api_url}${resource}`,
         method,
         Object.assign(data, {
@@ -27,8 +27,8 @@ export async function redmineFetch(resource, method = 'GET', data = {}, api_url 
     );
 }
 
-export async function gitlabFetch(resource, method = 'GET', data = {}, api_url = API_URL_GITLAB) {
-    return await restFetch(
+export function gitlabFetch(resource, method = 'GET', data = {}, api_url = API_URL_GITLAB) {
+    return restFetch(
         `${api_url}${resource}`,
         method,
         Object.assign(data, {

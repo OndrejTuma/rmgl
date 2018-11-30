@@ -1,39 +1,49 @@
 import {gitlabFetch} from './fetch';
 import {API_URL_GITLAB_ALL_PROJECTS} from './consts';
 
-export async function createMergeRequest(data) {
-    return await gitlabFetch('merge_requests', 'POST', data);
+export function createMergeRequest(data) {
+    return gitlabFetch('merge_requests', 'POST', data);
 }
 
-export async function mergeMergeRequest(id, iid) {
-    return await gitlabFetch(`merge_requests/${iid}/merge`, 'PUT', {
+export function mergeMergeRequest(id, iid) {
+    return gitlabFetch(`merge_requests/${iid}/merge`, 'PUT', {
         id,
         iid,
         merge_when_pipeline_succeeds: true,
     });
 }
 
-export async function fetchMergeRequestsAssignedTo(assignee_id) {
-    return await gitlabFetch('merge_requests', 'GET', {
-        state: 'opened',
-        assignee_id,
+export function rebaseMergeRequest(id, iid) {
+    return gitlabFetch(`merge_requests/${iid}/rebase`, 'PUT', {
+        id,
+        iid,
     });
 }
 
-export async function fetchMergeRequestsAssignedToMe() {
-    return await gitlabFetch('merge_requests', 'GET', {
+export function fetchMergeRequestsAssignedTo(assignee_id) {
+    return gitlabFetch('merge_requests', 'GET', {
+        include_rebase_in_progress: true,
+        assignee_id,
+        state: 'opened',
+    });
+}
+
+export function fetchMergeRequestsAssignedToMe() {
+    return gitlabFetch('merge_requests', 'GET', {
+        include_rebase_in_progress: true,
         state: 'opened',
         scope: 'assigned_to_me',
     }, API_URL_GITLAB_ALL_PROJECTS);
 }
 
-export async function fetchMergeRequestsFrom(author_id) {
-    return await gitlabFetch('merge_requests', 'GET', {
-        state: 'opened',
+export function fetchMergeRequestsFrom(author_id) {
+    return gitlabFetch('merge_requests', 'GET', {
         author_id,
+        include_rebase_in_progress: true,
+        state: 'opened',
     });
 }
 
-export async function updateMergeRequest(iid, data) {
-    return await gitlabFetch(`merge_requests/${iid}`, 'PUT', data);
+export function updateMergeRequest(iid, data) {
+    return gitlabFetch(`merge_requests/${iid}`, 'PUT', data);
 }
