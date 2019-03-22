@@ -1,1 +1,1 @@
-export const REDMINE_ISSUES_URL = 'http://rm.udiv.eu/issues/';
+export const REDMINE_ISSUES_URL = 'https://redmine.footshop.cz/issues/';
