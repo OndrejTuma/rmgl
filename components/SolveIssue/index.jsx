@@ -7,7 +7,7 @@ import FormSelect from '../FormSelect';
 import Textarea from '../Textarea';
 
 import {updateIssue} from 'Data/api/redmine';
-import {REDMINE_STATUS_ID_SOLVED, TOMAS_REDMINE_ID} from 'Data/consts';
+import {KASIA_REDMINE_ID, REDMINE_STATUS_ID_SOLVED} from 'Data/consts';
 
 import styles from './styles.scss';
 
@@ -62,7 +62,7 @@ class SolveIssue extends Component {
                         label={'Assigned to:'}
                         name={'assigned_to_id'}
                         options={this.usersOptions}
-                        selected={TOMAS_REDMINE_ID}
+                        selected={KASIA_REDMINE_ID}
                     />
                     <Textarea label={'Comment:'} name={'notes'} value={'lives on production'}/>
                     <p className={styles.buttons}>

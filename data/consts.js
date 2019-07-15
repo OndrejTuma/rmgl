@@ -1,6 +1,7 @@
 export const CURRENT_MEMBER_REDMINE_ID = 129;
 
 export const TOMAS_REDMINE_ID = 149;
+export const KASIA_REDMINE_ID = 371;
 export const MAREK_GITLAB_ID = 9;
 
 export const GITLAB_PROJECT_ID = 2;

@@ -62,16 +62,16 @@ class TeamStore {
             gitlab_id: 9,
         },
         {
-            firstname: 'Milan',
-            lastname: 'Donef',
-            redmine_id: 229,
-            gitlab_id: 11,
-        },
-        {
             firstname: 'Vlad',
             lastname: 'Opaets',
             redmine_id: 294,
             gitlab_id: 27,
+        },
+        {
+            firstname: 'Katarzyna',
+            lastname: 'Gorska',
+            redmine_id: 371,
+            gitlab_id: 0,
         },
     ];
 
