@@ -71,7 +71,7 @@ class TeamStore {
             firstname: 'Katarzyna',
             lastname: 'Gorska',
             redmine_id: 371,
-            gitlab_id: 0,
+            gitlab_id: 56,
         },
     ];
 
